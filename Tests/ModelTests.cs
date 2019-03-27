@@ -12,16 +12,14 @@ namespace LibraryUnitTests
         [TestMethod]
         public void CatalogHasEntries()
         {
-            var catalog = Pointsource.Catalog.ToList();
-
-            Assert.AreEqual(SOURCE_NAME, catalog[0]);
+            Assert.IsTrue(Catalog.Current.Keys.Count() > 0);
         }
 
         [TestMethod]
         public void SoureFromTheCatalogHasPoints()
         {
-            var source = new Pointsource(SOURCE_NAME);
-            var point = source.Datapoints.Skip(5).Take(1).First();
+            var source = Catalog.Current[SOURCE_NAME];
+            var point = source.Skip(5).Take(1).First();
 
             Assert.IsTrue(point.Value > 0);
         }
@@ -29,19 +27,15 @@ namespace LibraryUnitTests
         [TestMethod]
         public void ExpressionDecoratorShouldChangeValues()
         {
-            var source = new Pointsource(SOURCE_NAME) as IPointsource;
-            var point = source.Datapoints.Skip(5).Take(1).First();
+            var a = Catalog.Current[SOURCE_NAME];
+            var point = a.Skip(5).Take(1).First();
 
-            source = new Pointsource(SOURCE_NAME) as IPointsource;
-            source = new ExpresisonDecorator(source, x =>
-            {
-                x.Value += 1;
-                return x;
-            });
+            var b = Catalog.Current[SOURCE_NAME];
+            var c = new ExpressionDecorator(b, x => 2 * x);
 
-            var secondPoint = source.Datapoints.Skip(5).Take(1).First();
+            var secondPoint = c.Skip(5).Take(1).First();
 
-            Assert.IsTrue(point.Value < secondPoint.Value);
+            Assert.AreEqual(2 * point.Value, secondPoint.Value, 1e-6);
         }
     }
 }

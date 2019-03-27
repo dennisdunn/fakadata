@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="signal_data.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="signal_data.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Csv" Version="1.0.39" />
+  </ItemGroup>
+
+</Project>

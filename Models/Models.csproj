@@ -6,11 +6,6 @@
 
   <ItemGroup>
     <None Remove="IPointStream.cs~RF9a46cde.TMP" />
-    <None Remove="signal_data.csv" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="signal_data.csv" />
   </ItemGroup>
 
   <ItemGroup>

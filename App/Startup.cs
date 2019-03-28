@@ -1,13 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace WebApplication1
+namespace App
 {
     public class Startup
     {
@@ -21,6 +20,8 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
@@ -45,29 +46,16 @@ namespace WebApplication1
             else
             {
                 app.UseExceptionHandler("/Error");
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
-
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Timeseries API V1");
-            });
-
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{key?}");
+                    template: "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>
@@ -78,6 +66,11 @@ namespace WebApplication1
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
+            });
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c=>{
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Timeseries API v1");
             });
         }
     }

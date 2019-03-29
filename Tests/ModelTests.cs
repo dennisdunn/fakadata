@@ -1,5 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
+using Models.Impl;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LibraryUnitTests
@@ -36,6 +38,18 @@ namespace LibraryUnitTests
             var secondPoint = c.Skip(5).Take(1).First();
 
             Assert.AreEqual(2 * point.Value, secondPoint.Value, 1e-6);
+        }
+
+        [TestMethod]
+        public void IsTheCollectionPerpetual()
+        {
+            var data = new List<int> { 0, 1, 2, 3, 4 };
+
+            var iterator = new PerpetualAdapter<int>(data.GetEnumerator());
+
+            var selected = data.Skip(10).Take(1).First();
+
+            Assert.AreEqual(4, selected);
         }
     }
 }

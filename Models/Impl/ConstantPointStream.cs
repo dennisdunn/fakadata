@@ -7,7 +7,7 @@ namespace Models
     {
         private double _value;
 
-        public ConstantPointStream(string name, double value):base(name)
+        public ConstantPointStream(string name, double value) : base(name)
         {
             _value = value;
         }

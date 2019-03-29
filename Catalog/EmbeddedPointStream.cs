@@ -11,7 +11,7 @@ namespace Models
     public class EmbeddedPointStream : BasePointStream, IDisposable
     {
         private readonly Stream _stream;
-        private readonly IEnumerable<IDatapoint> _reader;
+        private readonly System.Collections.Generic.IEnumerable<IDatapoint> _reader;
 
         public EmbeddedPointStream(string name) :base(name)
         {

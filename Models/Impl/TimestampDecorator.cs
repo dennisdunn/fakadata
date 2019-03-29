@@ -3,7 +3,7 @@ using System;
 
 namespace Models
 {
-    public class TimestampDecorator : BaseDecorator
+    public class TimestampDecorator : BasePointDecorator
     {
         private DateTime _current = DateTime.Parse("01/01/1970");
         private TimeSpan _period = TimeSpan.FromSeconds(1);

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Models.Impl;
+using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Models
 {
-    public static class DecoratorExtensions
+    public static class ModelExtension
     {
         public static IPointStream WithTimestamp(this IPointStream target, DateTime start, TimeSpan period)
         {
@@ -23,6 +25,11 @@ namespace Models
         public static IPointStream WithTrend(this IPointStream target, Expression<Func<double, double>> expression)
         {
             return new TrendDecorator(target, expression);
+        }
+
+        public static IPointStream AsPerpetual(this IPointStream target)
+        {
+            return new PerpetualAdapter<IDatapoint>(target.GetEnumerator());
         }
     }
 }

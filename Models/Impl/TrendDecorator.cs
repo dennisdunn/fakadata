@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Models
 {
-    internal class TrendDecorator : BaseDecorator
+    internal class TrendDecorator : BasePointDecorator
     {
         public TrendDecorator(IPointStream target, Expression<Func<double, double>> expression) : base(target)
         {

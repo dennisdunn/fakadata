@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Models
 {
-    public class ExpressionDecorator : BaseDecorator
+    public class ExpressionDecorator : BasePointDecorator
     {
         public ExpressionDecorator(IPointStream target, Expression<Func<double, double>> func) : base(target)
         {

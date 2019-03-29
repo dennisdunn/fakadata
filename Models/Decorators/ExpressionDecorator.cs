@@ -1,8 +1,7 @@
-﻿using Models.Impl;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
-namespace Models
+namespace Models.Decorators
 {
     public class ExpressionDecorator : BasePointDecorator
     {

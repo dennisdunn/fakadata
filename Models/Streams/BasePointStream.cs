@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Models.Impl
+namespace Models.Streams
 {
     public abstract class BasePointStream : IPointStream
     {

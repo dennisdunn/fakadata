@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Models.Impl
+namespace Models.Decorators
 {
     public class PerpetualDecorator : BaseDecorator<IPointStream>, IPointStream
     {

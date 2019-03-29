@@ -1,7 +1,6 @@
-﻿using Models.Impl;
-using System;
+﻿using System;
 
-namespace Models
+namespace Models.Decorators
 {
     public class TimestampDecorator : BasePointDecorator
     {

@@ -1,7 +1,6 @@
-﻿using Models.Impl;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Models
+namespace Models.Streams
 {
     public class ConstantPointStream : BasePointStream
     {

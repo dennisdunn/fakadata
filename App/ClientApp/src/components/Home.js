@@ -6,7 +6,7 @@ export class Home extends Component {
     render() {
         return (
             <div>
-               Fake timeseries data to encourage exploration and spark innovation.
+                Fake timeseries data to encourage exploration and spark innovation.
         </div>
         );
     }

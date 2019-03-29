@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Models.Impl
+namespace Models.Decorators
 {
     public abstract class BasePointDecorator : IPointStream, IDecorator<IPointStream>
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Models.Impl
+namespace Models
 {
     public class PerpetualAdapter<T> : IEnumerator<T>
     {

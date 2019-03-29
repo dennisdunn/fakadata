@@ -1,4 +1,4 @@
-﻿namespace Models.Impl
+﻿namespace Models.Decorators
 {
     public class BaseDecorator<T> : IDecorator<T>
     {

@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Models;
-using Models.Impl;
+using Models.Decorators;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -47,7 +47,7 @@ namespace LibraryUnitTests
 
             var iterator = new PerpetualAdapter<int>(data.GetEnumerator());
 
-            for(var i = 0; i < 10; i++)
+            for (var i = 0; i < 10; i++)
             {
                 iterator.MoveNext();
             }

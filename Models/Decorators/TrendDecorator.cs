@@ -1,8 +1,8 @@
-﻿using Models.Impl;
+﻿using Models.Streams;
 using System;
 using System.Linq.Expressions;
 
-namespace Models
+namespace Models.Decorators
 {
     internal class TrendDecorator : BasePointDecorator
     {

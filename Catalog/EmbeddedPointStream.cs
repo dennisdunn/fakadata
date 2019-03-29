@@ -1,5 +1,4 @@
-﻿using Models;
-using Models.Impl;
+﻿using Models.Streams;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +12,7 @@ namespace Models
         private readonly Stream _stream;
         private readonly System.Collections.Generic.IEnumerable<IDatapoint> _reader;
 
-        public EmbeddedPointStream(string name) :base(name)
+        public EmbeddedPointStream(string name) : base(name)
         {
             var assembly = Assembly.GetExecutingAssembly();
 

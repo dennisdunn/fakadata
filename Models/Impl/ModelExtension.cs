@@ -1,6 +1,5 @@
 ﻿using Models.Impl;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Models
@@ -29,7 +28,7 @@ namespace Models
 
         public static IPointStream AsPerpetual(this IPointStream target)
         {
-            return new PerpetualAdapter<IDatapoint>(target.GetEnumerator());
+            return new PerpetualDecorator(target);
         }
     }
 }

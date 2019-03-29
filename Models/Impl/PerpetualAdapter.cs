@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Models.Impl
@@ -20,13 +21,11 @@ namespace Models.Impl
 
         public bool MoveNext()
         {
-            var hasMoved = _target.MoveNext();
-
-            if (hasMoved)
+            try
             {
-                return hasMoved;
+                return _target.MoveNext();
             }
-            else
+            catch (InvalidOperationException)
             {
                 Reset();
                 return _target.MoveNext();

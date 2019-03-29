@@ -47,9 +47,12 @@ namespace LibraryUnitTests
 
             var iterator = new PerpetualAdapter<int>(data.GetEnumerator());
 
-            var selected = data.Skip(10).Take(1).First();
+            for(var i = 0; i < 10; i++)
+            {
+                iterator.MoveNext();
+            }
 
-            Assert.AreEqual(4, selected);
+            Assert.AreEqual(4, iterator.Current);
         }
     }
 }

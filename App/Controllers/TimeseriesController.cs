@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using Models;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace App.Controllers
 {
@@ -19,16 +19,17 @@ namespace App.Controllers
 
         // GET: api/Timeseries
         [HttpGet]
-        public IEnumerable<string> Get()
+        public JsonResult Get()
         {
-            return Catalog.Current.Keys;
+            return new JsonResult(Catalog.Current.Keys);
         }
 
         // GET: api/Timeseries/5
         [HttpGet("{key}", Name = "Get")]
-        public IEnumerable<IDatapoint> Get(string key)
+        public JsonResult Get(string key)
         {
-            return Catalog.Current[key].WithTimestamp();
+            var result = Catalog.Current[key].WithTimestamp().ToList();
+            return new JsonResult(result);
         }
 
         // POST: api/Timeseries

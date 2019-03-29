@@ -17,19 +17,17 @@ namespace Models.Impl
 
         public T Current => _target.Current;
 
-        object IEnumerator.Current => Current;
+        object IEnumerator.Current => _target.Current;
 
         public bool MoveNext()
         {
-            try
+            var success = _target.MoveNext();
+            if (!success)
             {
-                return _target.MoveNext();
+                _target.Reset();
+                success = _target.MoveNext();
             }
-            catch (InvalidOperationException)
-            {
-                Reset();
-                return _target.MoveNext();
-            }
+            return success;
         }
 
         public void Reset()

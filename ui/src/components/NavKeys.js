@@ -12,17 +12,17 @@ const styles = {
 };
 
 export function NavKeys(props) {
-  const { keys, classes } = props;
+  const { items, classes, onKeySelected } = props;
 
   function btnClicked(evt) {
-    props.onKeySelected(evt.target.innerText);
+    onKeySelected(evt.target.innerText);
   }
 
   return (
     <div className={classes.root}>
-      {keys.map(key => (
-        <Button onClick={btnClicked} color={"primary"}>
-          {key}
+      {items.map(item => (
+        <Button key={item.key} onClick={btnClicked} color={"primary"}>
+          {item.value}
         </Button>
       ))}
     </div>
@@ -32,7 +32,7 @@ export function NavKeys(props) {
 NavKeys.propTypes = {
   classes: PropTypes.object.isRequired,
   onKeySelected: PropTypes.func,
-  keys: PropTypes.array.isRequired
+  items: PropTypes.array.isRequired
 };
 
 export default withStyles(styles)(NavKeys);

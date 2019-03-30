@@ -1,0 +1,6 @@
+export const INIT_GET_MENU = "INIT_GET_MENU";
+export const OK_GET_MENU = "OK_GET_MENU";
+export const ERR_GET_MENU = "ERR_GET_MENU";
+export const INIT_GET_TIMESERIES = "INIT_GET_TIMESERIES";
+export const OK_GET_TIMESERIES = "OK_GET_TIMESERIES";
+export const ERR_GET_TIMESERIES = "ERR_GET_TIMESERIES";

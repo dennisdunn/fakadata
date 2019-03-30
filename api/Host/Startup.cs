@@ -23,7 +23,7 @@ namespace App
             services.AddMemoryCache();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+                        
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Timeseries API", Version = "v1" });
@@ -41,6 +41,8 @@ namespace App
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseMvc(routes =>
             {

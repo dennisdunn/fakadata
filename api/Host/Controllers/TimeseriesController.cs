@@ -21,7 +21,9 @@ namespace App.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            return new JsonResult(Catalog.Current.Keys);
+            var i = 0;
+            var keys = Catalog.Current.Keys.OrderBy(key => key).Select(key => new { key = i++, value = key });
+            return new JsonResult(keys);
         }
 
         // GET: api/Timeseries/5

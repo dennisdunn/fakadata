@@ -17,12 +17,24 @@ namespace Models
             var assembly = Assembly.GetExecutingAssembly();
 
             _stream = assembly.GetManifestResourceStream(Catalog.EMBEDDED_RESOURCE);
-            _reader = Csv.CsvReader.ReadFromStream(_stream).Select(row => new Datapoint { Value = Convert.ToDouble(row[name]) });
+            _reader = Csv.CsvReader.ReadFromStream(_stream).Select(row => new Datapoint { Value = SafeConvert(row[name]) });
         }
 
         public override IEnumerator<IDatapoint> GetEnumerator()
         {
             return _reader.GetEnumerator();
+        }
+
+        double SafeConvert(string data)
+        {
+            try
+            {
+                return Convert.ToDouble(data);
+            }
+            catch (FormatException)
+            {
+                return double.NaN;
+            }
         }
 
         #region IDisposable Support

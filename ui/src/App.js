@@ -1,33 +1,43 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ClippedDrawer from "./components/ClippedDrawer";
 import NavKeys from "./components/NavKeys";
 import SimpleAppBar from "./components/SimpleAppBar";
+import { TimeseriesView } from "./components/TimeseriesView";
 import * as actions from "./services/actionCreators";
 
 class App extends Component {
-  
-  componentDidMount(){
+
+  componentDidMount() {
     this.props.fetchMenu();
   }
-
+  
+  styles = {
+    root: {
+      display: "flex",
+      flexDirection: "column"
+    },
+    content: {
+      display: "flex",
+      flexDirection: "row"
+    }
+  };
   render() {
+    const { menu, timeseries, fetchTimeseries } = this.props;
+
     return (
-      <div className="App">
+      <div style={this.styles.root}>
         <SimpleAppBar />
-        <ClippedDrawer>
-          <NavKeys
-            onKeySelected={this.props.fetchTimeseries}
-            items={this.props.items}
-          />
-        </ClippedDrawer>
+        <div style={this.styles.content}>
+          <NavKeys onKeySelected={fetchTimeseries} items={menu.items} />
+          <TimeseriesView data={timeseries.series} />
+        </div>
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { ...state.menu };
+  return { ...state };
 }
 
 export default connect(

@@ -5,11 +5,13 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
+    "pondjs": "^0.8.10",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.8",
+    "react-timeseries-charts": "^0.15.5",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },

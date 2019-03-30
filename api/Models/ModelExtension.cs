@@ -32,11 +32,5 @@ namespace Models
         {
             return new PerpetualDecorator(target);
         }
-
-        public static IEnumerable<object> WithKeys<T>(this IEnumerable<T> collection)
-        {
-            var i = 0;
-            return collection.Select(o => new { key = i++, value = o });
-        }
     }
 }

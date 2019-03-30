@@ -1,4 +1,5 @@
 import * as actions from "./actionTypes";
+import { asChartSeries } from "./chartServices";
 
 const BASE_URI = "http://localhost:5000/api/timeseries";
 
@@ -9,17 +10,18 @@ const handleErrors = response => {
   return response;
 };
 
-export const fetchTimeseries = key => {
+export const fetchTimeseries = name => {
   return dispatch => {
     dispatch({ type: actions.INIT_GET_TIMESERIES });
-    const uri = `${BASE_URI}/${key}`;
+    const uri = `${BASE_URI}/${name}`;
     return fetch(uri)
       .then(handleErrors)
       .then(response => response.json())
-      .then(timeseries =>
+      .then(series => asChartSeries(name, series))
+      .then(series =>
         dispatch({
           type: actions.OK_GET_TIMESERIES,
-          payload: { timeseries, key }
+          payload: {series}
         })
       )
       .catch(error =>

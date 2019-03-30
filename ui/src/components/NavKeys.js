@@ -7,27 +7,31 @@ const styles = {
   root: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginRight: 20,
+    marginTop: 20
   }
 };
 
-export function NavKeys(props) {
+export const NavKeys = props => {
   const { items, classes, onKeySelected } = props;
 
-  function btnClicked(evt) {
+  const btnClicked = evt => {
     onKeySelected(evt.target.innerText);
-  }
+  };
+  
+  let i = 0;
 
   return (
     <div className={classes.root}>
       {items.map(item => (
-        <Button key={item.key} onClick={btnClicked} color={"primary"}>
-          {item.value}
+        <Button key={i++} onClick={btnClicked} color={"primary"}>
+          {item}
         </Button>
       ))}
     </div>
   );
-}
+};
 
 NavKeys.propTypes = {
   classes: PropTypes.object.isRequired,

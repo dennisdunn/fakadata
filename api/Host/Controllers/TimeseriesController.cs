@@ -21,17 +21,14 @@ namespace App.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            var i = 0;
-            var keys = Catalog.Current.Keys.OrderBy(key => key).Select(key => new { key = i++, value = key });
-            return new JsonResult(keys);
+            return new JsonResult(Catalog.Current.Keys.OrderBy(key => key).WithKeys());
         }
 
         // GET: api/Timeseries/5
         [HttpGet("{key}", Name = "Get")]
         public JsonResult Get(string key)
         {
-            var result = Catalog.Current[key].WithTimestamp().ToList();
-            return new JsonResult(result);
+            return new JsonResult(Catalog.Current[key].WithTimestamp().WithKeys());
         }
 
         // POST: api/Timeseries

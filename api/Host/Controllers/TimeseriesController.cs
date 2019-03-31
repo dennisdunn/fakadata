@@ -26,9 +26,17 @@ namespace App.Controllers
 
         // GET: api/Timeseries/5
         [HttpGet("{key}", Name = "Get")]
-        public JsonResult Get(string key)
+        public JsonResult Get(string key, [FromQuery] int? offset, [FromQuery]  int? limit)
         {
-            return new JsonResult(Catalog.Current[key].WithTimestamp());
+            var series = Catalog.Current[key].WithTimestamp();
+            if (offset.HasValue && limit.HasValue)
+            {
+                return new JsonResult(series.Skip(offset.Value).Take(limit.Value));
+            }
+            else
+            {
+                return new JsonResult(series);
+            }
         }
 
         // POST: api/Timeseries

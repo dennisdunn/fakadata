@@ -18,7 +18,7 @@ namespace LibraryUnitTests
         }
 
         [TestMethod]
-        public void SoureFromTheCatalogHasPoints()
+        public void SourceFromTheCatalogHasPoints()
         {
             var source = Catalog.Current[SOURCE_NAME];
             var point = source.Skip(5).Take(1).First();

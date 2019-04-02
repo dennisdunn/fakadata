@@ -1,62 +1,40 @@
-import { combineReducers } from "redux";
-import * as actions from "./actionTypes";
+import { combineReducers } from 'redux';
 
-function initialTimeseriesData() {
-  return {
-    timeseries: [],
-    name: "",
-    isFetching: false,
-    error: undefined
-  };
-}
+import * as actions from './actionTypes';
 
-function initialMenuData() {
-  return {
-    items: [],
-    isFetching: false,
-    error: undefined
-  };
-}
-
-function timeseries(state = initialTimeseriesData(), action) {
-  switch (action.type) {
-    case actions.INIT_GET_TIMESERIES:
-      return { ...state, isFetching: true, error: undefined };
-    case actions.OK_GET_TIMESERIES:
-      return { ...action.payload, isFetching: false, error: undefined };
-    case actions.ERR_GET_TIMESERIES:
-      console.log(action.payload);
-      return {
-        ...state,
-        error: action.payload,
-        isFetching: false
-      };
-    default:
-      return state;
-  }
-}
-
-const menu = (state = initialMenuData(), action) => {
-  switch (action.type) {
-    case actions.INIT_GET_MENU:
-      return { items: [], isFetching: true, error: undefined };
-    case actions.OK_GET_MENU:
-      return { items: action.payload, isFetching: false, error: undefined };
-    case actions.ERR_GET_MENU:
-      console.log(action.payload);
-      return {
-        items: [],
-        error: action.payload,
-        isFetching: false
-      };
-    default:
-      return state;
-  }
+const library = (state = ['Math.pow(x,2)'], action) => {
+    switch (action.type) {
+        case actions.LIBRARY_LOADED:
+            return action.payload;
+        default:
+            return state;
+    }
 };
 
-export const rootReducer = combineReducers({
-  timeseries,
-  menu
-});
+const data = (state = [], action) => {
+    switch (action.type) {
+        case actions.DATA_LOADED:
+            return action.payload;
+        default:
+            return state;
+    }
+};
 
-export default rootReducer;
+const operations = (state = { isPending: false, error: undefined }, action) => {
+    switch (action.type) {
+        case actions.OPERATION_STARTED:
+            return { isPending: true };
+        case actions.OPERATION_COMPLETE:
+            return { isPending: false };
+        case actions.OPERATION_ERRORED:
+            return { pending: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+export default combineReducers({
+    operations,
+    library,
+    data
+});

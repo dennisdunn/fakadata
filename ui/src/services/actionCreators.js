@@ -17,3 +17,9 @@ export const generateData = funcs => {
         }
     }
 }
+
+export const clearData = () => {
+    return dispatch => {
+        dispatch({ type: actions.DATA_CLEARED });
+    }
+}

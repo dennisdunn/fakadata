@@ -26,7 +26,7 @@ class App extends Component {
         <Container style={styles.container} fluid>
           <Row>
             <Col xs={2}>
-              <ExpressionEditor expressions={this.props.library} onApply={this.props.generateData} />
+              <ExpressionEditor expressions={this.props.library} onApply={this.props.generateData} onClear={this.props.clearData} />
             </Col>
             <Col xs={1}></Col>
             <Col>

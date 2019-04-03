@@ -11,7 +11,7 @@ const styles = {
 
 export const ExpressionGraph = props => {
     const { data } = props;
-    console.log(props);
+    
     return (
         <div style={styles.root}>
             <ResponsiveContainer height={450} width="70%">

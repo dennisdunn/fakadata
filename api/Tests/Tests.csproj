@@ -15,8 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Builder\Builder.csproj" />
-    <ProjectReference Include="..\Catalog\Catalog.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 

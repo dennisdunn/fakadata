@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Repository;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace App
@@ -28,6 +29,8 @@ namespace App
             {
                 c.SwaggerDoc("v1", new Info { Title = "Timeseries API", Version = "v1" });
             });
+
+            services.AddSingleton<ITsRepository, TsRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

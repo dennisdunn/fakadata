@@ -37,6 +37,9 @@ export class ExpressionEditor extends React.Component {
         return () => {
             let { items } = this.state;
             items = items.filter((_, i) => idx !== i);
+            if (items.length === 0) {
+                this.props.onClear();
+            }
             this.setState({ items });
         }
     }
@@ -47,13 +50,19 @@ export class ExpressionEditor extends React.Component {
         this.setState({ items });
     }
 
+    onKey(evt) {
+        if (evt.keyCode === 13) {
+            this.apply();
+        }
+    }
+
     render() {
         const { items } = this.state;
         const controls = items.map((x, idx) =>
             <Form.Group key={idx}>
                 <Form.Row>
                     <Col>
-                        <Form.Control defaultValue={x} onChange={this.mkOnChange(idx).bind(this)} size='sm' />
+                        <Form.Control defaultValue={x} size='sm' placeholder='f(x)' onChange={this.mkOnChange(idx).bind(this)} onBlur={this.apply.bind(this)} onKeyUp={this.onKey.bind(this)} />
                     </Col>
                     <Col xs={2}>
                         <Button variant="secondary" size="sm" onClick={this.mkOnRemove(idx).bind(this)}><Icon name="minus" /></Button>
@@ -63,22 +72,18 @@ export class ExpressionEditor extends React.Component {
 
         return (
             <div style={styles.root}>
-                <Form>
-                    <h3 style={styles.header}>
-                        f(x)
-                    </h3>
-                    {controls}
-                    <Form.Group>
-                        <Form.Row>
-                            <Col>
-                            </Col>
-                            <Col xs={2}>
-                                <Button variant="primary" size="sm" onClick={this.onAdd.bind(this)}><Icon name="plus" /></Button>
-                            </Col>
-                        </Form.Row>
-                    </Form.Group>
-                    <Button variant="primary" onClick={this.apply.bind(this)}>Apply</Button>
-                </Form>
+
+                {controls}
+                <Form.Group>
+                    <Form.Row>
+                        <Col>
+                        </Col>
+                        <Col xs={2}>
+                            <Button variant="primary" size="sm" onClick={this.onAdd.bind(this)}><Icon name="plus" /></Button>
+                        </Col>
+                    </Form.Row>
+                </Form.Group>
+
             </div>
         );
     }

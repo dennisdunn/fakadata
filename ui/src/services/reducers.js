@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import * as actions from './actionTypes';
 
-const library = (state = ['Math.pow(x,2)'], action) => {
+const library = (state = [], action) => {
     switch (action.type) {
         case actions.LIBRARY_LOADED:
             return action.payload;
@@ -15,6 +15,8 @@ const data = (state = [], action) => {
     switch (action.type) {
         case actions.DATA_LOADED:
             return action.payload;
+        case actions.DATA_CLEARED:
+            return [];
         default:
             return state;
     }

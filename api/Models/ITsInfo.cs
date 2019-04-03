@@ -1,4 +1,4 @@
-﻿namespace Repository
+﻿namespace Models
 {
     public interface ITsInfo
     {

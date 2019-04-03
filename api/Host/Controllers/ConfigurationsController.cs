@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Models;
 using Repository;
 using System;
 
-namespace App.Controllers
+namespace Host.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -24,7 +25,7 @@ namespace App.Controllers
         }
 
         // GET: api/Timeseries/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}")]
         public JsonResult Get(int id)
         {
             return new JsonResult(_repository.Read(id));

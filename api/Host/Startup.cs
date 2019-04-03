@@ -1,3 +1,4 @@
+using Engine;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace App
+namespace Host
 {
     public class Startup
     {
@@ -31,6 +32,7 @@ namespace App
             });
 
             services.AddSingleton<ITsRepository, TsRepository>();
+            services.AddSingleton<IGenerator, Generator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using Models;
 
 namespace Engine
 {
-    public interface IGenerator
+    public interface IGenerator<T> : IEnumerable<T>, IEnumerator<T>
     {
-        IEnumerable<IDataPoint> Generate(ITsDescription ts);
     }
 }

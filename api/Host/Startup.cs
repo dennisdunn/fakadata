@@ -32,7 +32,7 @@ namespace Host
             });
 
             services.AddSingleton<ITsRepository>(new TsRepository(Configuration["connectionStrings:TsDescDb"]));
-            services.AddSingleton<IGenerator, Generator>();
+         //   services.AddSingleton<IGenerator, Generator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

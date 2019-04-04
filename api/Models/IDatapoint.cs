@@ -2,13 +2,9 @@
 
 namespace Models
 {
-    public interface IDataPoint : IDataPoint<double>
-    {
-    }
-
-    public interface IDataPoint<T>
+    public interface IDataPoint
     {
         DateTime Timestamp { get; set; }
-        T Value { get; set; }
+        double Value { get; set; }
     }
 }

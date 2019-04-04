@@ -8,8 +8,4 @@
     <None Remove="IPointStream.cs~RF9a46cde.TMP" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Csv" Version="1.0.39" />
-  </ItemGroup>
-
 </Project>

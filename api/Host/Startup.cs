@@ -31,7 +31,7 @@ namespace Host
                 c.SwaggerDoc("v1", new Info { Title = "Timeseries API", Version = "v1" });
             });
 
-            services.AddSingleton<ITsRepository, TsRepository>();
+            services.AddSingleton<ITsRepository>(new TsRepository(Configuration["connectionStrings:TsDescDb"]));
             services.AddSingleton<IGenerator, Generator>();
         }
 

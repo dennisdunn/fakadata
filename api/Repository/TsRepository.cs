@@ -1,5 +1,5 @@
 ﻿using LiteDB;
-using Microsoft.Extensions.Configuration;
+//using Microsoft.Extensions.Configuration;
 using Models;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +11,12 @@ namespace Repository
     {
         private readonly string _connectionString;
 
-        public TsRepository(IConfiguration config) {
-            _connectionString = config["connectionStrings:TsDefDb"];
+        //public TsRepository(IConfiguration config) {
+        //    _connectionString = config["connectionStrings:TsDefDb"];
+        //}
+        public TsRepository(string connectionString)
+        {
+            _connectionString = connectionString;
         }
 
         public IEnumerable<ITsInfo> List()

@@ -49,12 +49,20 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void ShouldTake5ThenSkip5AndGenerate5More()
+        public void ShouldTake5ThenSkip5AndGenerate5MoreByRestarting()
         {
             var g = new TimestampGenerator(Env);
             g.Take(5).ToList(); // advance the pointer
             var ts = g.Skip(5).Take(5).Last();
             Assert.AreEqual(14, ts.Minute);
+        }
+
+        [TestMethod]
+        public void SudoMakeMeSomeDoubles()
+        {
+            var g = new ValueGenerator(Env);
+            var v = g.Skip(5).Take(5).Last();
+            Assert.AreEqual(100, v);
         }
     }
 }

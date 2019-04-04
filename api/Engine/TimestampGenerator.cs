@@ -6,8 +6,7 @@ namespace Engine
     public class TimestampGenerator : BaseGenerator<DateTime>
     {
         public TimestampGenerator(ITsDescription target) : base(target)
-        {
-            Reset();
+        { 
         }
 
         public override bool MoveNext()

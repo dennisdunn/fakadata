@@ -35,7 +35,6 @@ namespace Engine
 
         public void Dispose()
         {
-            Target = null;
         }
     }
 }

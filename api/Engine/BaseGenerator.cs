@@ -1,4 +1,5 @@
 ﻿using Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,9 +22,12 @@ namespace Engine
 
         public abstract bool MoveNext();
 
-        public abstract void Reset();
+        public virtual void Reset()
+        {
+            throw new InvalidOperationException();
+        }
 
-        public IEnumerator<T> GetEnumerator()
+        public virtual IEnumerator<T> GetEnumerator()
         {
             return this;
         }
@@ -33,7 +37,7 @@ namespace Engine
             return GetEnumerator();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
         }
     }

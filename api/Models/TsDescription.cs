@@ -6,9 +6,9 @@ namespace Models
     public class TsDescription : ITsDescription
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime Start { get; set; }
-        public TimeSpan Period { get; set; }
-        public IEnumerable<string> Source { get; set; } 
+        public string Name { get; set; } = "Default";
+        public DateTime Start { get; set; } = new DateTime(1970, 1, 1);
+        public TimeSpan Period { get; set; } = TimeSpan.FromHours(1);
+        public List<string> Source { get; set; } 
     }
 }

@@ -64,5 +64,13 @@ namespace UnitTests
             var v = g.Skip(5).Take(5).Last();
             Assert.AreEqual(100, v);
         }
+
+        [TestMethod]
+        public void SudoMakeMeSomeDatapoints()
+        {
+            var g = new DatapointGenerator(Env);
+            var d = g.Skip(5).Take(5).Last();
+            Assert.AreEqual(100, d.Value);
+        }
     }
 }

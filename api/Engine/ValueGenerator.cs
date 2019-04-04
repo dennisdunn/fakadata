@@ -26,10 +26,5 @@ namespace Engine
 
             return true;
         }
-
-        public override void Reset()
-        {
-            _idx = 0;
-        }
     }
 }

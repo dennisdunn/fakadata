@@ -7,9 +7,19 @@ namespace Host
 {
     public static class Extensions
     {
-        public static IEnumerable<IDataPoint> GetPage(this IEnumerable<IDataPoint> items, int? offset, int? limit)
+        public static IEnumerable<IDatapoint> Next(this IGenerator<IDatapoint> generator)
         {
-            return offset.HasValue && limit.HasValue ? items.Skip(offset.Value).Take(limit.Value) : items;
+            return generator.Sample(1);
+        }
+
+        public static IEnumerable<IDatapoint> Sample(this IGenerator<IDatapoint> generator)
+        {
+            return generator.Sample(100);
+        }
+
+        public static IEnumerable<IDatapoint> Sample(this IGenerator<IDatapoint> generator, int count)
+        {
+            return generator.Take(count);
         }
     }
 }

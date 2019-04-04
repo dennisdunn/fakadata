@@ -18,10 +18,5 @@ namespace Engine
 
             return true;
         }
-
-        public override void Reset()
-        {
-            Current = DateTime.MinValue;
-        }
     }
 }

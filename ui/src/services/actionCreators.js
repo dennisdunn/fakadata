@@ -1,25 +1,25 @@
-import * as actions from './actionTypes';
+import * as actions from "./actionTypes";
 
-export const generateData = funcs => {
-    return dispatch => {
-        dispatch({ type: actions.OPERATION_STARTED });
-        try {
-            // gen data & data_loaded
-            const data = [];
-            const f = new Function("x", "return " + funcs.join("+") + ";");
-            for (let x = 0; x < 100; x++) {
-                data.push({ mv: f(x) });
-            }
-            dispatch({ type: actions.DATA_LOADED, payload: data });
-            dispatch({ type: actions.OPERATION_COMPLETE });
-        } catch (error) {
-            dispatch({ type: actions.OPERATION_ERRORED, payload: error });
-        }
-    }
-}
+const ENGINE_URI = "http://localhost:5000/api/engine";
+const CONFIG_URI = "http://localhost:5000/api/config";
+
+export const getPreview = funcs => {
+  const src = funcs.join("+");
+  const uri = ENGINE_URI + "?source=" + src;
+  return dispatch => {
+    dispatch({ type: actions.OPERATION_STARTED });
+    fetch(uri)
+      .then(resp => resp.json())
+      .then(data => dispatch({ type: actions.DATA_LOADED, payload: data }))
+      .then(() => dispatch({ type: actions.OPERATION_COMPLETE }))
+      .catch(error =>
+        dispatch({ type: actions.OPERATION_ERRORED, payload: error })
+      );
+  };
+};
 
 export const clearData = () => {
-    return dispatch => {
-        dispatch({ type: actions.DATA_CLEARED });
-    }
-}
+  return dispatch => {
+    dispatch({ type: actions.DATA_CLEARED });
+  };
+};

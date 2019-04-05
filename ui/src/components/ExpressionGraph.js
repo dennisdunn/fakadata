@@ -11,12 +11,12 @@ const styles = {
 
 export const ExpressionGraph = props => {
     const { data } = props;
-    
+
     return (
         <div style={styles.root}>
             <ResponsiveContainer height={450} width="70%">
                 <LineChart data={data}>
-                    <Line type="monotone" dataKey="mv" stroke="#8884d8" dot={false} />
+                    <Line type="monotone" dataKey="value" stroke="#8884d8" dot={false} />
                 </LineChart>
             </ResponsiveContainer>
         </div>

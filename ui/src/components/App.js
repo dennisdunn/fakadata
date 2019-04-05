@@ -21,12 +21,12 @@ class App extends Component {
     return (
       <div >
         <Navbar bg="primary" variant="dark">
-          <Navbar.Brand>Fakadata Builder</Navbar.Brand>
+          <Navbar.Brand>Fakadata</Navbar.Brand>
         </Navbar>
         <Container style={styles.container} fluid>
           <Row>
             <Col xs={2}>
-              <ExpressionEditor expressions={this.props.library} onApply={this.props.generateData} onClear={this.props.clearData} />
+              <ExpressionEditor expressions={this.props.library} onApply={this.props.getPreview} onClear={this.props.clearData} />
             </Col>
             <Col xs={1}></Col>
             <Col>

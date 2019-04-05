@@ -4,8 +4,7 @@ const ENGINE_URI = "http://localhost:5000/api/engine";
 const CONFIG_URI = "http://localhost:5000/api/config";
 
 export const getPreview = funcs => {
-  const src = funcs.join("+");
-  const uri = ENGINE_URI + "?source=" + src;
+  const uri = ENGINE_URI + "?" +funcs.map(f=>`source=${f}`).join("&");
   return dispatch => {
     dispatch({ type: actions.OPERATION_STARTED });
     fetch(uri)

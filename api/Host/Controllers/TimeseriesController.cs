@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using Models;
-using Repository;
-using System;
+using Timeseries.Api.Models;
+using Timeseries.Api.Repository;
 
-namespace Host.Controllers
+namespace Timeseries.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ConfigurationsController : ControllerBase
+    public class TimeseriesController : ControllerBase
     {
         private readonly ITsRepository _repository;
 
-        public ConfigurationsController(ITsRepository repository)
+        public TimeseriesController(ITsRepository repository)
         {
             _repository = repository;
         }

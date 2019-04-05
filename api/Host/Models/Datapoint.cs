@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Models
+namespace Timeseries.Api.Models
 {
     public class Datapoint : IDatapoint
     {

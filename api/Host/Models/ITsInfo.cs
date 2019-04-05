@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace Timeseries.Api.Models
 {
     public interface ITsInfo
     {

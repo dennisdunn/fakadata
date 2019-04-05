@@ -1,9 +1,9 @@
-﻿using Models;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Timeseries.Api.Models;
 
-namespace Engine
+namespace Timeseries.Api.Evaluator
 {
     public abstract class BaseGenerator<T> : ITsDescriptionDecorator, IGenerator<T>
     {

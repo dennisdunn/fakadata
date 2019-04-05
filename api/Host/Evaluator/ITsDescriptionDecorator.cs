@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using Models;
+﻿using Timeseries.Api.Models;
 
-namespace Engine
+namespace Timeseries.Api.Evaluator
 {
     public interface ITsDescriptionDecorator
     {

@@ -4,9 +4,13 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <AssemblyName>Timeseries.Api</AssemblyName>
+    <RootNamespace>Timeseries.Api</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Flee" Version="1.2.2" />
+    <PackageReference Include="LiteDB" Version="4.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
@@ -14,12 +18,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="4.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Engine\Engine.csproj" />
-    <ProjectReference Include="..\Models\Models.csproj" />
-    <ProjectReference Include="..\Repository\Repository.csproj" />
   </ItemGroup>
 
 </Project>

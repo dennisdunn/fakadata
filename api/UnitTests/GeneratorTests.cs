@@ -1,9 +1,9 @@
-using Engine;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Timeseries.Api.Evaluator;
+using Timeseries.Api.Models;
 
 namespace UnitTests
 {
@@ -60,7 +60,7 @@ namespace UnitTests
         [TestMethod]
         public void SudoMakeMeSomeDoubles()
         {
-            var g = new ValueGenerator(Env);
+            var g = new Timeseries.Api.Evaluator.ValueGenerator(Env);
             var v = g.Skip(5).Take(5).Last();
             Assert.AreEqual(100, v);
         }

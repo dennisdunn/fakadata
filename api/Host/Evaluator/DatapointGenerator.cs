@@ -1,9 +1,8 @@
-﻿using Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Timeseries.Api.Models;
 
-namespace Engine
+namespace Timeseries.Api.Evaluator
 {
     public class DatapointGenerator : BaseGenerator<IDatapoint>
     {

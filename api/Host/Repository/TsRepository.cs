@@ -1,11 +1,9 @@
 ﻿using LiteDB;
-//using Microsoft.Extensions.Configuration;
-using Models;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using Timeseries.Api.Models;
 
-namespace Repository
+namespace Timeseries.Api.Repository
 {
     public class TsRepository : ITsRepository
     {
@@ -23,7 +21,7 @@ namespace Repository
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<TsDescription>("descriptions").FindAll().Select(Extensions.GetInfo);
+                return db.GetCollection<TsDescription>("descriptions").FindAll().Select(x => new TsInfo { Id = x.Id, Name = x.Name });
             }
         }
 

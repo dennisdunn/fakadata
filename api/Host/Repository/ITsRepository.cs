@@ -1,7 +1,7 @@
-﻿using Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Timeseries.Api.Models;
 
-namespace Repository
+namespace Timeseries.Api.Repository
 {
     public interface ITsRepository
     {

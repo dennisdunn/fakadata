@@ -1,9 +1,9 @@
-﻿using Engine;
-using Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Timeseries.Api.Evaluator;
+using Timeseries.Api.Models;
 
-namespace Host
+namespace Timeseries.Api
 {
     public static class Extensions
     {

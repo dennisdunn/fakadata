@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Engine
+namespace Timeseries.Api.Evaluator
 {
     public interface IGenerator<T> : IEnumerable<T>, IEnumerator<T>
     {

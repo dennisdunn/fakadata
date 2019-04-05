@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Models
+namespace Timeseries.Api.Models
 {
     public interface ITsDescription
     {

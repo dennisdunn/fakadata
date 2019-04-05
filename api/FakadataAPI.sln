@@ -3,13 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.539
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Host", "Host\Host.csproj", "{00214E67-304E-438A-B6AC-58FF7ED66FDB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Engine", "Engine\Engine.csproj", "{2CB95043-E762-4FAA-B3A7-2DD6F8AFBDFB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{B67A62A6-4B57-4144-A2EB-5F9085E27FE6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{022AD115-1570-432D-83B6-A3686C9113BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeseriesAPI", "Host\TimeseriesAPI.csproj", "{00214E67-304E-438A-B6AC-58FF7ED66FDB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{D7002BB1-F3EE-4BD8-A166-EEF8DC1FA71B}"
 EndProject
@@ -23,18 +17,6 @@ Global
 		{00214E67-304E-438A-B6AC-58FF7ED66FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00214E67-304E-438A-B6AC-58FF7ED66FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00214E67-304E-438A-B6AC-58FF7ED66FDB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2CB95043-E762-4FAA-B3A7-2DD6F8AFBDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2CB95043-E762-4FAA-B3A7-2DD6F8AFBDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2CB95043-E762-4FAA-B3A7-2DD6F8AFBDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CB95043-E762-4FAA-B3A7-2DD6F8AFBDFB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B67A62A6-4B57-4144-A2EB-5F9085E27FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B67A62A6-4B57-4144-A2EB-5F9085E27FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B67A62A6-4B57-4144-A2EB-5F9085E27FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B67A62A6-4B57-4144-A2EB-5F9085E27FE6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{022AD115-1570-432D-83B6-A3686C9113BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{022AD115-1570-432D-83B6-A3686C9113BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{022AD115-1570-432D-83B6-A3686C9113BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{022AD115-1570-432D-83B6-A3686C9113BB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7002BB1-F3EE-4BD8-A166-EEF8DC1FA71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D7002BB1-F3EE-4BD8-A166-EEF8DC1FA71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7002BB1-F3EE-4BD8-A166-EEF8DC1FA71B}.Release|Any CPU.ActiveCfg = Release|Any CPU

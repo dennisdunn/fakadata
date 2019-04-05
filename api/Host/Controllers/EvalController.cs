@@ -1,19 +1,19 @@
-﻿using Engine;
-using Microsoft.AspNetCore.Mvc;
-using Models;
-using Repository;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Timeseries.Api.Evaluator;
+using Timeseries.Api.Models;
+using Timeseries.Api.Repository;
 
-namespace Host.Controllers
+namespace Timeseries.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EngineController : ControllerBase
+    public class EvalController : ControllerBase
     {
         const int DEFAULT_PREVIEW_COUNT = 100;
         private readonly ITsRepository _repository;
 
-        public EngineController(ITsRepository repository)
+        public EvalController(ITsRepository repository)
         {
             _repository = repository;
         }

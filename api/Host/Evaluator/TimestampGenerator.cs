@@ -1,7 +1,7 @@
-﻿using Models;
-using System;
+﻿using System;
+using Timeseries.Api.Models;
 
-namespace Engine
+namespace Timeseries.Api.Evaluator
 {
     public class TimestampGenerator : BaseGenerator<DateTime>
     {

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -26,7 +27,7 @@ namespace Host
                         
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "Timeseries API", Version = "v1" });
+                c.SwaggerDoc("v1", new Info { Title = "Fakadata API", Version = "v1" });
             });
 
             services.AddSingleton<ITsRepository>(new TsRepository(Configuration["connectionStrings:TsDescDb"]));
@@ -46,6 +47,10 @@ namespace Host
 
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+            app.UseRewriter(option);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -55,7 +60,7 @@ namespace Host
 
             app.UseSwagger();
             app.UseSwaggerUI(c=>{
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Timeseries API v1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fakadata API v1");
             });
         }
     }

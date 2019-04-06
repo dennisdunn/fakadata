@@ -19,7 +19,7 @@ namespace UnitTests
             {
                 Start = new DateTime(1970, 1, 1),
                 Period = TimeSpan.FromMinutes(1),
-                Source = new List<string> { "1", "2*x", "x^2" }
+                Expressions = new List<string> { "1", "2*x", "x^2" }
             };
         }
 

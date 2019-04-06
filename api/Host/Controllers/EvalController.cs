@@ -24,7 +24,7 @@ namespace Timeseries.Api.Controllers
         {
             if (source.Count == 0) return BadRequest();
 
-            var desc = new TsDescription { Source = source };
+            var desc = new TsDescription { Expressions = source };
 
             var generator = new DatapointGenerator(desc);
             var ts = generator.Sample(count ?? DEFAULT_PREVIEW_COUNT);

@@ -8,7 +8,7 @@ namespace Timeseries.Api.Models
         int Id { get; set; }
         string Name { get; set; }
         TimeSpan Period { get; set; }
-        List<string> Source { get; set; }
+        List<string> Expressions { get; set; }
         DateTime Start { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Timeseries.Api.Evaluator
             _context = new ExpressionContext();
             _context.Imports.AddType(typeof(Math));
             _context.Variables["x"] = _idx;
-            _expression = _context.CompileGeneric<double>(string.Join('+', Target.Source.ToArray()));
+            _expression = _context.CompileGeneric<double>(string.Join('+', Target.Expressions));
         }
 
         public override bool MoveNext()

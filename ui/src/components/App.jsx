@@ -6,8 +6,9 @@ import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
 
 import * as actions from '../services/actionCreators';
-import ExpressionEditor from './ExpressionEditor';
+import ExpressionEditor from './ExpressionListEditor';
 import ExpressionGraph from './ExpressionGraph';
+import TimeseriesList from './TimeseriesList';
 
 const styles = {
   container: {
@@ -24,6 +25,11 @@ class App extends Component {
           <Navbar.Brand>Fakadata</Navbar.Brand>
         </Navbar>
         <Container style={styles.container} fluid>
+        <Row>
+          <Col xs={2}>
+          <TimeseriesList/>
+          </Col>
+        </Row>
           <Row>
             <Col xs={2}>
               <ExpressionEditor expressions={this.props.library} onApply={this.props.getPreview} onClear={this.props.clearData} />

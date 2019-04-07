@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import Form from "react-bootstrap/Form";
 
 export class PreviewButton extends React.Component {
     render() {
@@ -10,16 +10,16 @@ export class PreviewButton extends React.Component {
                 Preview
             </Button>
         ) : (
-            <Button variant="primary" onClick={this.props.onClick.bind(this)}>
-                Preview
+                <Button variant="primary" onClick={this.props.onClick.bind(this)}>
+                    Preview
             </Button>
-        );
+            );
 
         return (
-            <Row>
+            <Form.Row>
                 <Col>{previewBtn}</Col>
                 <Col xs={2} />
-            </Row>
+            </Form.Row>
         );
     }
 }

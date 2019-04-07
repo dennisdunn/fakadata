@@ -4,18 +4,18 @@ import * as actions from './actionTypes';
 
 const library = (state = [], action) => {
     switch (action.type) {
-        case actions.LIBRARY_LOADED:
+        case actions.TIMESERIES_LIST_LOADED:
             return action.payload;
         default:
             return state;
     }
 };
 
-const data = (state = [], action) => {
+const preview = (state = [], action) => {
     switch (action.type) {
-        case actions.DATA_LOADED:
+        case actions.PREVIEW_LOADED:
             return action.payload;
-        case actions.DATA_CLEARED:
+        case actions.PREVIEW_CLEARED:
             return [];
         default:
             return state;
@@ -35,8 +35,19 @@ const operations = (state = { isPending: false, error: undefined }, action) => {
     }
 };
 
+const timeseries = (state = { id: 0, name: null, start: null, period: null, expressions: [] }, action) => {
+    switch (action.type) {
+        case actions.TIMESERIES_LOADED:
+            return action.payload;
+        case actions.TIMESERIES_SAVED:
+        default:
+            return state;
+    }
+};
+
 export default combineReducers({
+    timeseries,
     operations,
     library,
-    data
+    preview
 });

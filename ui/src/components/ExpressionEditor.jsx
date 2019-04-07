@@ -2,25 +2,28 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
 import Icon from "react-fontawesome";
 
 export class ExpressionEditor extends React.Component {
 
+    changed(event) {
+        this.props.onChange({ id: this.props.id, value: event.target.value });
+    }
+
     remove() {
-        this.props.onRemove(this.props.id);
+        this.props.onRemove({ id: this.props.id });
     }
 
     render() {
         const { value } = this.props;
         return (
-            <Row>
+            <Form.Group as={Form.Row}>
                 <Col>
                     <Form.Control
-                        defaultValue={value}
+                        value={value}
                         size="sm"
                         placeholder="f(x)"
-                        onChange={this.props.onChange}
+                        onChange={this.changed.bind(this)}
                     />
                 </Col>
                 <Col xs={2}>
@@ -31,7 +34,7 @@ export class ExpressionEditor extends React.Component {
                         <Icon name="minus" />
                     </Button>
                 </Col>
-            </Row>
+            </Form.Group>
         );
     }
 }

@@ -4,11 +4,11 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
-
 import * as actions from '../services/actionCreators';
-import ExpressionEditor from './ExpressionListEditor';
 import ExpressionGraph from './ExpressionGraph';
+import TimeseriesEditor from './TimeseriesEditor';
 import TimeseriesList from './TimeseriesList';
+
 
 const styles = {
   container: {
@@ -18,25 +18,25 @@ const styles = {
 
 class App extends Component {
 
+  componentDidMount() {
+    this.props.getTimeseriesList();
+  }
+
   render() {
     return (
       <div >
         <Navbar bg="primary" variant="dark">
           <Navbar.Brand>Fakadata</Navbar.Brand>
+          <TimeseriesList items={this.props.library} />
         </Navbar>
         <Container style={styles.container} fluid>
-        <Row>
-          <Col xs={2}>
-          <TimeseriesList/>
-          </Col>
-        </Row>
           <Row>
             <Col xs={2}>
-              <ExpressionEditor expressions={this.props.library} onApply={this.props.getPreview} onClear={this.props.clearData} />
+              <TimeseriesEditor timeseries={this.props.timeseries} />
             </Col>
-            <Col xs={1}></Col>
-            <Col>
-              <ExpressionGraph data={this.props.data} />
+            <Col xs={2}/>
+            <Col xs={8}>
+              <ExpressionGraph data={this.props.preview} />
             </Col>
           </Row>
         </Container>

@@ -43,6 +43,12 @@ export const saveTimeseries = timeseries => {
   return createThunk(uri, options, actions.TIMESERIES_SAVED);
 };
 
+export const updateTimeseries = payload =>{
+  return dispatch =>{
+    dispatch({type:actions.TIMESERIES_UPDATED, payload});
+  }
+}
+
 export const clearData = () => {
   return dispatch => {
     dispatch({ type: actions.PREVIEW_CLEARED });

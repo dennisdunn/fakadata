@@ -15,12 +15,11 @@ export class ExpressionEditor extends React.Component {
     }
 
     render() {
-        const { value } = this.props;
         return (
             <Form.Group as={Form.Row}>
                 <Col>
                     <Form.Control
-                        value={value}
+                        value={this.props.value}
                         size="sm"
                         placeholder="f(x)"
                         onChange={this.changed.bind(this)}

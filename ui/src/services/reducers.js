@@ -39,6 +39,8 @@ const timeseries = (state = { id: 0, name: null, start: null, period: null, expr
     switch (action.type) {
         case actions.TIMESERIES_LOADED:
             return action.payload;
+        case actions.TIMESERIES_UPDATED:
+            return { ...state, ...action.payload };
         case actions.TIMESERIES_SAVED:
         default:
             return state;

@@ -22,19 +22,26 @@ class App extends Component {
     this.props.getTimeseriesList();
   }
 
+  select(id) {
+    this.props.getTimeseries(id);
+  }
+
   render() {
+    console.log(this.props);
     return (
       <div >
         <Navbar bg="primary" variant="dark">
           <Navbar.Brand>Fakadata</Navbar.Brand>
-          <TimeseriesList items={this.props.library} />
+          <Navbar.Collapse className="justify-content-end">
+            <TimeseriesList items={this.props.library} onSelect={this.select.bind(this)} />
+          </Navbar.Collapse>
         </Navbar>
         <Container style={styles.container} fluid>
           <Row>
             <Col xs={2}>
-              <TimeseriesEditor timeseries={this.props.timeseries} />
+              <TimeseriesEditor />
             </Col>
-            <Col xs={2}/>
+            <Col xs={2} />
             <Col xs={8}>
               <ExpressionGraph data={this.props.preview} />
             </Col>
@@ -46,7 +53,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return { ...state };
+  const { library, preview } = state;
+  return { library, preview };
 };
 
 export default connect(mapStateToProps, actions)(App);

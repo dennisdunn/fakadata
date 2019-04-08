@@ -9,58 +9,56 @@ import ExpressionEditor from './ExpressionEditor';
 
 
 export class TimeseriesEditor extends React.Component {
-    constructor(props) {
-        super(props);
-        const { id, name, start, period, expressions } = this.props.timeseries;
-        this.state = { id, name, start, period, expressions };
-    }
 
     update(field) {
         return event => {
-            this.setState({ [field]: event.target.value });
+            this.props.updateTimeseries({ [field]: event.target.value });
         };
     }
 
     addExpression() {
-        const { expressions } = this.state;
+        const expressions = this.props.expressions.slice(0);
         expressions.push('');
-        this.setState({ expressions });
+        this.props.updateTimeseries({ expressions });
     }
 
     removeExpression(item) {
-        let { expressions } = this.state;
-        expressions = expressions.filter((_, idx) => idx !== item.id);
-        this.setState({ expressions });
+
+        const expressions = this.props.expressions.length > 1
+            ? this.props.expressions.slice(item.id, 1)
+            : [];
+        this.props.updateTimeseries({ expressions });
     }
 
     changeExpression(item) {
-        const { expressions } = this.state;
+        const expressions = this.props.expressions.slice(0);
         expressions[item.id] = item.value;
-        this.setState({ expressions });
+        this.props.updateTimeseries({ expressions });
     }
 
     preview() {
-        const { expressions } = this.state;
-        this.props.getPreview(expressions);
+        this.props.getPreview(this.props.expressions);
     }
 
     canPreview() {
-        const { expressions } = this.state;
-        return expressions.join('').length > 0;
+        return this.props.expressions.join('').length > 0;
     }
 
     canSave() {
-        const { name, start, period } = this.state;
+        const { name, start, period } = this.props;
         return `${name}${start}${period}`.length > 0 && this.canPreview();
     }
 
     save() {
-        this.props.saveTimeseries(this.state);
+        const { id, name, start, period, expressions } = this.props;
+        this.props.saveTimeseries({ id, name, start, period, expressions });
     }
 
     render() {
-        const { id, name, start, period, expressions } = this.state;
+        const { name, start, period, expressions } = this.props;
+
         const exprEditors = expressions.map((item, idx) => <ExpressionEditor id={idx} value={item} onRemove={this.removeExpression.bind(this)} onChange={this.changeExpression.bind(this)} />);
+
         return (
             <Form>
                 <Form.Group as={Form.Row}>
@@ -127,4 +125,9 @@ export class TimeseriesEditor extends React.Component {
     }
 }
 
-export default connect(null, actions)(TimeseriesEditor);
+
+const mapStateToProps = state => {
+    return { ...state.timeseries };
+};
+
+export default connect(mapStateToProps, actions)(TimeseriesEditor);

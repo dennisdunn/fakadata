@@ -49,8 +49,14 @@ export const updateTimeseries = payload =>{
   }
 }
 
-export const clearData = () => {
+export const clearPreview = () => {
   return dispatch => {
     dispatch({ type: actions.PREVIEW_CLEARED });
+  };
+};
+
+export const clearTimeseries= () => {
+  return dispatch => {
+    dispatch({ type: actions.TIMESERIES_CLEARED });
   };
 };

@@ -56,7 +56,6 @@ export class TimeseriesEditor extends React.Component {
 
     render() {
         const { name, start, period, expressions } = this.props;
-
         const exprEditors = expressions.map((item, idx) => <ExpressionEditor id={idx} value={item} onRemove={this.removeExpression.bind(this)} onChange={this.changeExpression.bind(this)} />);
 
         return (

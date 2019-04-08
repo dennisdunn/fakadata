@@ -23,11 +23,13 @@ class App extends Component {
   }
 
   select(id) {
-    this.props.getTimeseries(id);
+    this.props.clearPreview();
+    id == 0
+      ? this.props.clearTimeseries()
+      : this.props.getTimeseries(id);
   }
 
   render() {
-    console.log(this.props);
     return (
       <div >
         <Navbar bg="primary" variant="dark">

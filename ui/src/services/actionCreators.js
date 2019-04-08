@@ -1,7 +1,7 @@
 import * as actions from "./actionTypes";
 
-const ENGINE_URI = "http://localhost:8080/api/eval";
-const CONFIG_URI = "http://localhost:8080/api/timeseries";
+const ENGINE_URI = "http://localhost:8081/api/eval";
+const CONFIG_URI = "http://localhost:8081/api/timeseries";
 
 export const getPreview = funcs => {
   const uri = `${ENGINE_URI}?${funcs.map(f => `source=${f}`).join("&")}`;

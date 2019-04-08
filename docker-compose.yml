@@ -1,0 +1,16 @@
+version: "3"
+services:
+  ui:
+    build: ./ui
+    image: fakadata:ui
+    ports:
+      - "8080:80"
+  api:
+    build: ./api
+    image: fakadata:api
+    ports:
+      - "8081:80"
+    volumes:
+      - "db-data:/data"
+volumes:
+  db-data:

@@ -12,6 +12,10 @@ namespace Timeseries.Api.Repository
         public TsRepository(string connectionString)
         {
             _connectionString = connectionString;
+            using (var db = new LiteDatabase(_connectionString))
+            {
+                db.GetCollection<TsDescription>("descriptions").EnsureIndex("Name");
+            }
         }
 
         public IEnumerable<ITsInfo> List()
@@ -39,12 +43,11 @@ namespace Timeseries.Api.Repository
             }
         }
 
-        public IEnumerable<ITsDescription> Read(string name)
+        public ITsDescription Read(string name)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                var collection = db.GetCollection<TsDescription>("descriptions");
-                return collection.Find(item => item.Name.Contains(name, System.StringComparison.OrdinalIgnoreCase));
+                return db.GetCollection<TsDescription>("descriptions").FindOne(Query.EQ("Name", name));
             }
         }
 
@@ -56,7 +59,7 @@ namespace Timeseries.Api.Repository
             }
         }
 
-        public void Delete(TsDescription item)
+        public void Delete(ITsDescription item)
         {
             Delete(item._id);
         }

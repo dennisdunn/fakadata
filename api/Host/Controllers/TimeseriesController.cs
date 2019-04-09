@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Timeseries.Api.Models;
 using Timeseries.Api.Repository;
 
@@ -40,6 +41,9 @@ namespace Timeseries.Api.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] TsDescription value)
         {
+            var cache = (IMemoryCache)HttpContext.RequestServices.GetService(typeof(IMemoryCache));
+            cache.Remove(value.Name);
+
             _repository.Update(value);
         }
 
@@ -47,7 +51,11 @@ namespace Timeseries.Api.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            _repository.Delete(id);
+            var value = _repository.Read(id);
+            var cache = (IMemoryCache)HttpContext.RequestServices.GetService(typeof(IMemoryCache));
+            cache.Remove(value.Name);
+
+            _repository.Delete(value);
         }
     }
 }

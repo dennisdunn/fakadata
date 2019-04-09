@@ -4,7 +4,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 export class TimeseriesList extends React.Component {
 
     render() {
-        const items = this.props.items.map(item => <Dropdown.Item eventKey={item._id}>{item.name}</Dropdown.Item>);
+        const items = this.props.items.map(item => <Dropdown.Item eventKey={item.value}>{item.key}</Dropdown.Item>);
         return (
             <Dropdown onSelect={this.props.onSelect}>
                 <Dropdown.Toggle variant="success">Timeseries</Dropdown.Toggle>

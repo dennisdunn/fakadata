@@ -1,20 +1,23 @@
 import * as actions from "./actionTypes";
 
-const ENGINE_URI = "http://localhost:8081/api/eval";
-const CONFIG_URI = "http://localhost:8081/api/timeseries";
+const API_HOST ='http://192.168.99.104:8081';
+const PREVIEW_URL = "api/preview";
+const DEFINITION_URL = "api/definitions";
+const TIMESERIES_URL = "api/timeseries";
 
 export const getPreview = funcs => {
-  const uri = `${ENGINE_URI}?${funcs.map(f => `source=${f}`).join("&")}`;
+  console.log(window.location);
+  const uri = `${API_HOST}/${PREVIEW_URL}?${funcs.map(f => `source=${f}`).join("&")}`;
   return createThunk(uri, null, actions.PREVIEW_LOADED);
 };
 
 export const getTimeseries = id => {
-  const uri = `${CONFIG_URI}/${id}`;
+  const uri = `${API_HOST}/${TIMESERIES_URL}/${id}`;
   return createThunk(uri, null, actions.TIMESERIES_LOADED);
 };
 
 export const getTimeseriesList = () => {
-  const uri = `${CONFIG_URI}`;
+  const uri = `${API_HOST}/${DEFINITION_URL}`;
   return createThunk(uri, null, actions.TIMESERIES_LIST_LOADED);
 };
 
@@ -32,7 +35,7 @@ export const createThunk = (uri, options, type) => {
 };
 
 export const saveTimeseries = timeseries => {
-  const uri = `${CONFIG_URI}`;
+  const uri = `${API_HOST}/${DEFINITION_URL}`;
   const options = {
     headers: {
       'Content-Type': 'application/json'

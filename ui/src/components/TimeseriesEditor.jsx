@@ -11,7 +11,8 @@ import ExpressionEditor from './ExpressionEditor';
 export class TimeseriesEditor extends React.Component {
 
     componentDidUpdate(prev) {
-        if (+this.props._id > 0) {
+        const id = +this.props._id;
+        if (id !== prev._id && id > 0) {
             this.preview();
         }
     }

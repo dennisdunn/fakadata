@@ -9,9 +9,6 @@ namespace Timeseries.Api.Repository
     {
         private readonly string _connectionString;
 
-        //public TsRepository(IConfiguration config) {
-        //    _connectionString = config["connectionStrings:TsDefDb"];
-        //}
         public TsRepository(string connectionString)
         {
             _connectionString = connectionString;
@@ -21,7 +18,7 @@ namespace Timeseries.Api.Repository
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<TsDescription>("descriptions").FindAll().Select(x => new TsInfo { Id = x.Id, Name = x.Name });
+                return db.GetCollection<TsDescription>("descriptions").FindAll().Select(x => new TsInfo { _id = x._id, Name = x.Name });
             }
         }
 
@@ -61,7 +58,7 @@ namespace Timeseries.Api.Repository
 
         public void Delete(TsDescription item)
         {
-            Delete(item.Id);
+            Delete(item._id);
         }
 
         public void Delete(int id)

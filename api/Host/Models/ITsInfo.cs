@@ -2,7 +2,7 @@
 {
     public interface ITsInfo
     {
-        int Id { get; set; }
+        int _id { get; set; }
         string Name { get; set; }
     }
 }

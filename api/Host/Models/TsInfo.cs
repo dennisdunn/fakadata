@@ -2,7 +2,7 @@
 {
     public class TsInfo : ITsInfo
     {
-        public int Id { get; set; }
+        public int _id { get; set; }
         public string Name { get; set; }
     }
 }

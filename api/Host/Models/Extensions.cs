@@ -8,7 +8,7 @@ namespace Timeseries.Api.Models
     {
         public static ITsInfo GetInfo(this ITsDescription item)
         {
-            return new TsInfo { Id = item.Id, Name = item.Name };
+            return new TsInfo { _id = item._id, Name = item.Name };
         }
     }
 }

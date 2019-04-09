@@ -14,6 +14,7 @@ namespace Timeseries.Api.Evaluator
         {
             _context = new ExpressionContext();
             _context.Imports.AddType(typeof(Math));
+            _context.Imports.AddType(typeof(Probability));
             _context.Variables["x"] = _idx;
             _expression = _context.CompileGeneric<double>(string.Join('+', Target.Expressions));
         }

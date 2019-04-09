@@ -35,7 +35,7 @@ const operations = (state = { isPending: false, error: undefined }, action) => {
     }
 };
 
-const defaultTimeseries = () => { return { id: 0, name: '', start: '', period: '', expressions: [] } };
+const defaultTimeseries = () => { return { id: 0, name: '', start: '1970-01-01', period: '00:01:00:00', expressions: [] } };
 const timeseries = (state = defaultTimeseries(), action) => {
     switch (action.type) {
         case actions.TIMESERIES_LOADED:

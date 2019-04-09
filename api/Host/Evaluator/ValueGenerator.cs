@@ -4,13 +4,13 @@ using Timeseries.Api.Models;
 
 namespace Timeseries.Api.Evaluator
 {
-    public class ValueGenerator : BaseGenerator<double>, ITsDescriptionDecorator
+    public class ValueGenerator : BaseGenerator<double>, IDefinitionDecorator
     {
         private readonly ExpressionContext _context;
         private readonly IGenericExpression<double> _expression;
         private int _idx = 0;
 
-        public ValueGenerator(ITsDescription target) : base(target)
+        public ValueGenerator(IDefinition target) : base(target)
         {
             _context = new ExpressionContext();
             _context.Imports.AddType(typeof(Math));

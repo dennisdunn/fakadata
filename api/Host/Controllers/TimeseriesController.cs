@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using System.Collections.Generic;
+using Timeseries.Api.Evaluator;
 using Timeseries.Api.Models;
 using Timeseries.Api.Repository;
 
@@ -9,53 +11,34 @@ namespace Timeseries.Api.Controllers
     [ApiController]
     public class TimeseriesController : ControllerBase
     {
-        private readonly ITsRepository _repository;
+        const int DEFAULT_PREVIEW_COUNT = 100;
+        private readonly IDefinitionRepository _repository;
+        private readonly IMemoryCache _memoryCache;
 
-        public TimeseriesController(ITsRepository repository)
+        public TimeseriesController(IDefinitionRepository repository, IMemoryCache memoryCache)
         {
             _repository = repository;
+            _memoryCache = memoryCache;
         }
 
-        // GET: api/Timeseries
-        [HttpGet]
-        public JsonResult Get()
+        // GET: api/Timeseries/key
+        [HttpGet("{key}")]
+        public IActionResult Get(string key, int? count)
         {
-            return new JsonResult(_repository.List());
-        }
+            if (!_memoryCache.TryGetValue(key, out IGenerator<IDatapoint> generator))
+            {
+                var desc = _repository.Read(key);
+                if (desc == null) return NotFound();
+                generator = new DatapointGenerator(desc);
 
-        // GET: api/Timeseries/5
-        [HttpGet("{id}")]
-        public JsonResult Get(int id)
-        {
-            return new JsonResult(_repository.Read(id));
-        }
+                var options = new MemoryCacheEntryOptions()
+                    .SetPriority(CacheItemPriority.NeverRemove);
+                _memoryCache.Set(key, generator, options);
+            }
 
-        // POST: api/Timeseries
-        [HttpPost]
-        public void Post([FromBody] TsDescription value)
-        {
-            _repository.Create(value);
-        }
+            var ts = generator.Sample(count ?? DEFAULT_PREVIEW_COUNT);
 
-        // PUT: api/Timeseries/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] TsDescription value)
-        {
-            var cache = (IMemoryCache)HttpContext.RequestServices.GetService(typeof(IMemoryCache));
-            cache.Remove(value.Name);
-
-            _repository.Update(value);
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            var value = _repository.Read(id);
-            var cache = (IMemoryCache)HttpContext.RequestServices.GetService(typeof(IMemoryCache));
-            cache.Remove(value.Name);
-
-            _repository.Delete(value);
+            return new JsonResult(ts);
         }
     }
 }

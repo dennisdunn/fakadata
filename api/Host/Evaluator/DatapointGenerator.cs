@@ -10,7 +10,7 @@ namespace Timeseries.Api.Evaluator
         private readonly ValueGenerator _values;
         private readonly IEnumerable<Datapoint> _datapoints;
 
-        public DatapointGenerator(ITsDescription target) : base(target)
+        public DatapointGenerator(IDefinition target) : base(target)
         {
             _timestamps = new TimestampGenerator(target);
             _values = new ValueGenerator(target);

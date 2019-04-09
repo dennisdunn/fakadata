@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Timeseries.Api.Models
 {
-    public interface ITsDescription
+    public interface IDefinition
     {
         int _id { get; set; }
         string Name { get; set; }

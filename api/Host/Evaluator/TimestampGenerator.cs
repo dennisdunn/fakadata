@@ -5,7 +5,7 @@ namespace Timeseries.Api.Evaluator
 {
     public class TimestampGenerator : BaseGenerator<DateTime>
     {
-        public TimestampGenerator(ITsDescription target) : base(target)
+        public TimestampGenerator(IDefinition target) : base(target)
         { 
         }
 

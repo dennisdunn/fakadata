@@ -2,8 +2,8 @@
 
 namespace Timeseries.Api.Evaluator
 {
-    public interface ITsDescriptionDecorator
+    public interface IDefinitionDecorator
     {
-       ITsDescription Target { get; }
+       IDefinition Target { get; }
     }
 }

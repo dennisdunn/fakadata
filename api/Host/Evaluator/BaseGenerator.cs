@@ -5,9 +5,9 @@ using Timeseries.Api.Models;
 
 namespace Timeseries.Api.Evaluator
 {
-    public abstract class BaseGenerator<T> : ITsDescriptionDecorator, IGenerator<T>
+    public abstract class BaseGenerator<T> : IDefinitionDecorator, IGenerator<T>
     {
-        public ITsDescription Target { get; protected set; }
+        public IDefinition Target { get; protected set; }
 
         public T Current { get; protected set; }
 
@@ -15,7 +15,7 @@ namespace Timeseries.Api.Evaluator
 
         protected BaseGenerator() { }
 
-        public BaseGenerator(ITsDescription target)
+        public BaseGenerator(IDefinition target)
         {
             Target = target;
         }

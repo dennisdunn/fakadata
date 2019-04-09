@@ -1,11 +1,10 @@
 import * as actions from "./actionTypes";
 
-const API_HOST ='http://192.168.99.104:8081';
+const API_HOST =`http://${window.location.hostname}:8081`;
 const PREVIEW_URL = "api/preview";
 const DEFINITION_URL = "api/definitions";
 
 export const getPreview = funcs => {
-  console.log(window.location);
   const uri = `${API_HOST}/${PREVIEW_URL}?${funcs.map(f => `source=${f}`).join("&")}`;
   return createThunk(uri, null, actions.PREVIEW_LOADED);
 };

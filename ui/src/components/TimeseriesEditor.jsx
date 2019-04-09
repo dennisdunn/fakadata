@@ -10,6 +10,12 @@ import ExpressionEditor from './ExpressionEditor';
 
 export class TimeseriesEditor extends React.Component {
 
+    componentDidUpdate(prev) {
+        if (+this.props._id > 0) {
+            this.preview();
+        }
+    }
+
     update(field) {
         return event => {
             this.props.updateTimeseries({ [field]: event.target.value });
@@ -24,12 +30,12 @@ export class TimeseriesEditor extends React.Component {
 
     removeExpression(item) {
         const expressions = this.props.expressions.slice(0);
-        const stk=[];
-        for(let i=0;i<item.id;i++){
+        const stk = [];
+        for (let i = 0; i < item.id; i++) {
             stk.push(expressions.shift());
         }
         expressions.pop();
-        for(let i=0;i<item.id;i++){
+        for (let i = 0; i < item.id; i++) {
             expressions.unshift(stk.pop());
         }
         this.props.updateTimeseries({ expressions });
@@ -56,7 +62,7 @@ export class TimeseriesEditor extends React.Component {
 
     save() {
         const { _id, name, start, period, expressions } = this.props;
-        this.props.saveTimeseries({_id, name, start, period, expressions });
+        this.props.saveTimeseries({ _id, name, start, period, expressions });
     }
 
     render() {

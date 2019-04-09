@@ -23,10 +23,12 @@ class App extends Component {
   }
 
   select(id) {
-    this.props.clearPreview();
-    +id === 0
-      ? this.props.clearTimeseries()
-      : this.props.getTimeseries(id);
+    if (+id === 0) {
+      this.props.clearPreview();
+      this.props.clearTimeseries();
+    } else {
+      this.props.getTimeseries(id);
+    }
   }
 
   render() {

@@ -39,7 +39,9 @@ namespace Timeseries.Api.Repository
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<Definition>("descriptions").FindById(id);
+                return id > 0
+                    ? db.GetCollection<Definition>("descriptions").FindById(id)
+                    : new Definition();
             }
         }
 

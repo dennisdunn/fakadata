@@ -3,7 +3,6 @@ import * as actions from "./actionTypes";
 const API_HOST ='http://192.168.99.104:8081';
 const PREVIEW_URL = "api/preview";
 const DEFINITION_URL = "api/definitions";
-const TIMESERIES_URL = "api/timeseries";
 
 export const getPreview = funcs => {
   console.log(window.location);
@@ -11,14 +10,14 @@ export const getPreview = funcs => {
   return createThunk(uri, null, actions.PREVIEW_LOADED);
 };
 
-export const getTimeseries = id => {
-  const uri = `${API_HOST}/${TIMESERIES_URL}/${id}`;
-  return createThunk(uri, null, actions.TIMESERIES_LOADED);
+export const getDefinition = id => {
+  const uri = `${API_HOST}/${DEFINITION_URL}/${id}`;
+  return createThunk(uri, null, actions.DEFINITION_LOADED);
 };
 
-export const getTimeseriesList = () => {
+export const getDefinitionList = () => {
   const uri = `${API_HOST}/${DEFINITION_URL}`;
-  return createThunk(uri, null, actions.TIMESERIES_LIST_LOADED);
+  return createThunk(uri, null, actions.DEFINITION_LIST_LOADED);
 };
 
 export const createThunk = (uri, options, type) => {
@@ -34,21 +33,21 @@ export const createThunk = (uri, options, type) => {
   };
 };
 
-export const saveTimeseries = timeseries => {
+export const saveDefinition = definition => {
   const uri = `${API_HOST}/${DEFINITION_URL}`;
   const options = {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify(timeseries)
+    body: JSON.stringify(definition)
   };
-  return createThunk(uri, options, actions.TIMESERIES_SAVED);
+  return createThunk(uri, options, actions.DEFINITION_SAVED);
 };
 
-export const updateTimeseries = payload =>{
+export const updateDefinition = payload =>{
   return dispatch =>{
-    dispatch({type:actions.TIMESERIES_UPDATED, payload});
+    dispatch({type:actions.DEFINITION_UPDATED, payload});
   }
 }
 
@@ -58,8 +57,8 @@ export const clearPreview = () => {
   };
 };
 
-export const clearTimeseries= () => {
+export const clearDefinition= () => {
   return dispatch => {
-    dispatch({ type: actions.TIMESERIES_CLEARED });
+    dispatch({ type: actions.DEFINITION_CLEARED });
   };
 };

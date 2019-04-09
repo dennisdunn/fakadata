@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
+
 import * as actions from './actionTypes';
 
 const library = (state = [], action) => {
     switch (action.type) {
-        case actions.TIMESERIES_LIST_LOADED:
+        case actions.DEFINITION_LIST_LOADED:
             return action.payload;
         default:
             return state;
@@ -35,24 +36,23 @@ const operations = (state = { isPending: false, error: undefined }, action) => {
     }
 };
 
-const defaultTimeseries = () => { return { id: 0, name: '', start: '1970-01-01', period: '00:01:00:00', expressions: [] } };
-const timeseries = (state = defaultTimeseries(), action) => {
+const defaultDefinition = { id: 0, name: '', start: '1970-01-01', period: '00:01:00:00', expressions: [] };
+const definitions = (state = defaultDefinition, action) => {
     switch (action.type) {
-        case actions.TIMESERIES_LOADED:
+        case actions.DEFINITION_LOADED:
             return action.payload;
-        case actions.TIMESERIES_UPDATED:
+        case actions.DEFINITION_UPDATED:
             return { ...state, ...action.payload };
-        case actions.TIMESERIES_CLEARED:
-            return defaultTimeseries();
-        case actions.TIMESERIES_SAVED:
-            return state;
+        case actions.DEFINITION_CLEARED:
+            return { ...defaultDefinition };
+        case actions.DEFINITION_SAVED:
         default:
             return state;
     }
 };
 
 export default combineReducers({
-    timeseries,
+    definitions,
     operations,
     library,
     preview

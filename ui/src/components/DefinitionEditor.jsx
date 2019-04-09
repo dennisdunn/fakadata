@@ -1,14 +1,15 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Icon from "react-fontawesome";
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Icon from 'react-fontawesome';
 import { connect } from 'react-redux';
+
 import * as actions from '../services/actionCreators';
 import ExpressionEditor from './ExpressionEditor';
 
 
-export class TimeseriesEditor extends React.Component {
+export class DefinitionEditor extends React.Component {
 
     componentDidUpdate(prev) {
         const id = +this.props._id;
@@ -19,14 +20,14 @@ export class TimeseriesEditor extends React.Component {
 
     update(field) {
         return event => {
-            this.props.updateTimeseries({ [field]: event.target.value });
+            this.props.updateDefinition({ [field]: event.target.value });
         };
     }
 
     addExpression() {
         const expressions = this.props.expressions.slice(0);
         expressions.push('');
-        this.props.updateTimeseries({ expressions });
+        this.props.updateDefinition({ expressions });
     }
 
     removeExpression(item) {
@@ -39,13 +40,13 @@ export class TimeseriesEditor extends React.Component {
         for (let i = 0; i < item.id; i++) {
             expressions.unshift(stk.pop());
         }
-        this.props.updateTimeseries({ expressions });
+        this.props.updateDefinition({ expressions });
     }
 
     changeExpression(item) {
         const expressions = this.props.expressions.slice(0);
         expressions[item.id] = item.value;
-        this.props.updateTimeseries({ expressions });
+        this.props.updateDefinition({ expressions });
     }
 
     preview() {
@@ -63,7 +64,7 @@ export class TimeseriesEditor extends React.Component {
 
     save() {
         const { _id, name, start, period, expressions } = this.props;
-        this.props.saveTimeseries({ _id, name, start, period, expressions });
+        this.props.saveDefinition({ _id, name, start, period, expressions });
     }
 
     render() {
@@ -138,7 +139,7 @@ export class TimeseriesEditor extends React.Component {
 
 
 const mapStateToProps = state => {
-    return { ...state.timeseries };
+    return { ...state.definitions };
 };
 
-export default connect(mapStateToProps, actions)(TimeseriesEditor);
+export default connect(mapStateToProps, actions)(DefinitionEditor);

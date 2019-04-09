@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { getTimeseriesList } from './actionCreators';
 import * as actions from './actionTypes';
 
 const library = (state = [], action) => {
@@ -11,7 +10,7 @@ const library = (state = [], action) => {
     }
 };
 
-const defaultPreview=[];
+const defaultPreview = [];
 const preview = (state = defaultPreview, action) => {
     switch (action.type) {
         case actions.PREVIEW_LOADED:
@@ -36,15 +35,15 @@ const operations = (state = { isPending: false, error: undefined }, action) => {
     }
 };
 
-const defaultTimeseries = { id: 0, name: '', start: '', period: '', expressions: [] };
-const timeseries = (state = defaultTimeseries, action) => {
+const defaultTimeseries = () => { return { id: 0, name: '', start: '', period: '', expressions: [] } };
+const timeseries = (state = defaultTimeseries(), action) => {
     switch (action.type) {
         case actions.TIMESERIES_LOADED:
             return action.payload;
         case actions.TIMESERIES_UPDATED:
             return { ...state, ...action.payload };
         case actions.TIMESERIES_CLEARED:
-            return defaultTimeseries ;
+            return defaultTimeseries();
         case actions.TIMESERIES_SAVED:
             return state;
         default:

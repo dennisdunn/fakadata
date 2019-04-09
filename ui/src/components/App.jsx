@@ -24,7 +24,7 @@ class App extends Component {
 
   select(id) {
     this.props.clearPreview();
-    id == 0
+    +id === 0
       ? this.props.clearTimeseries()
       : this.props.getTimeseries(id);
   }

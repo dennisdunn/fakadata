@@ -23,10 +23,15 @@ export class TimeseriesEditor extends React.Component {
     }
 
     removeExpression(item) {
-
-        const expressions = this.props.expressions.length > 1
-            ? this.props.expressions.slice(item.id, 1)
-            : [];
+        const expressions = this.props.expressions.slice(0);
+        const stk=[];
+        for(let i=0;i<item.id;i++){
+            stk.push(expressions.shift());
+        }
+        expressions.pop();
+        for(let i=0;i<item.id;i++){
+            expressions.unshift(stk.pop());
+        }
         this.props.updateTimeseries({ expressions });
     }
 

@@ -50,8 +50,8 @@ export class TimeseriesEditor extends React.Component {
     }
 
     save() {
-        const { id, name, start, period, expressions } = this.props;
-        this.props.saveTimeseries({ id, name, start, period, expressions });
+        const { _id, name, start, period, expressions } = this.props;
+        this.props.saveTimeseries({_id, name, start, period, expressions });
     }
 
     render() {

@@ -4,7 +4,7 @@ using Timeseries.Api.Models;
 
 namespace Timeseries.Api.Evaluator
 {
-    public class ValueGenerator : BaseGenerator<double>, IDefinitionDecorator
+    public class ValueGenerator : BaseGeneratorDecorator<double>, IDefinitionDecorator
     {
         private readonly ExpressionContext _context;
         private readonly IGenericExpression<double> _expression;

@@ -8,7 +8,7 @@ namespace Timeseries.Api.Repository
         ITsDescription Create(TsDescription item);
         void Delete(int id);
         void Delete(ITsDescription item);
-        IEnumerable<ITsInfo> List();
+        IEnumerable<object> List();
         ITsDescription Read(int id);
         ITsDescription Read(string name);
         void Update(TsDescription item);

@@ -3,7 +3,7 @@ using Timeseries.Api.Models;
 
 namespace Timeseries.Api.Evaluator
 {
-    public class TimestampGenerator : BaseGenerator<DateTime>
+    public class TimestampGenerator : BaseGeneratorDecorator<DateTime>
     {
         public TimestampGenerator(ITsDescription target) : base(target)
         { 

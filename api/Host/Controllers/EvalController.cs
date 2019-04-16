@@ -35,39 +35,19 @@ namespace Timeseries.Api.Controllers
             return new JsonResult(ts);
         }
 
-        //// GET: api/Timeseries/5
-        //[HttpGet("{id}")]
-        //public IActionResult Get(int id, int? count)
-        //{
-        //    if (!_memoryCache.TryGetValue(id, out IGenerator<IDatapoint> generator))
-        //    {
-        //        var desc = _repository.Read(id);
-        //        if (desc == null) return NotFound();
-        //        generator = new DatapointGenerator(desc);
-
-        //        var options = new MemoryCacheEntryOptions()
-        //            .SetPriority(CacheItemPriority.NeverRemove);
-        //        _memoryCache.Set(id, generator, options);
-        //    }
-
-        //    var ts = generator.Sample(count ?? DEFAULT_PREVIEW_COUNT);
-
-        //    return new JsonResult(ts);
-        //}
-
-        // GET: api/Timeseries/5
-        [HttpGet("{name}")]
-        public IActionResult Get(string name, int? count)
+        // GET: api/Timeseries/key
+        [HttpGet("{key}")]
+        public IActionResult Get(string key, int? count)
         {
-            if (!_memoryCache.TryGetValue(name, out IGenerator<IDatapoint> generator))
+            if (!_memoryCache.TryGetValue(key, out IGenerator<IDatapoint> generator))
             {
-                var desc = _repository.Read(name);
+                var desc = _repository.Read(key);
                 if (desc == null) return NotFound();
                 generator = new DatapointGenerator(desc);
 
                 var options = new MemoryCacheEntryOptions()
                     .SetPriority(CacheItemPriority.NeverRemove);
-                _memoryCache.Set(name, generator, options);
+                _memoryCache.Set(key, generator, options);
             }
 
             var ts = generator.Sample(count ?? DEFAULT_PREVIEW_COUNT);

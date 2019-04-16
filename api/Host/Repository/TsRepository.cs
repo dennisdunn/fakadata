@@ -18,11 +18,11 @@ namespace Timeseries.Api.Repository
             }
         }
 
-        public IEnumerable<ITsInfo> List()
+        public IEnumerable<object> List()
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<TsDescription>("descriptions").FindAll().Select(x => new TsInfo { _id = x._id, Name = x.Name });
+                return db.GetCollection<TsDescription>("descriptions").FindAll().Select(x => new { x._id, x.Name });
             }
         }
 

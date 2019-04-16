@@ -4,7 +4,7 @@ using Timeseries.Api.Models;
 
 namespace Timeseries.Api.Evaluator
 {
-    public class DatapointGenerator : BaseGenerator<IDatapoint>
+    public class DatapointGenerator : BaseGeneratorDecorator<IDatapoint>
     {
         private readonly TimestampGenerator _timestamps;
         private readonly ValueGenerator _values;

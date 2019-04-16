@@ -9,9 +9,9 @@ namespace Timeseries.Api.Controllers
     [ApiController]
     public class DefinitionsController : ControllerBase
     {
-        private readonly IDefinitionRepository _repository;
+        private readonly IRepository<Definition> _repository;
 
-        public DefinitionsController(IDefinitionRepository repository)
+        public DefinitionsController(IRepository<Definition> repository)
         {
             _repository = repository;
         }

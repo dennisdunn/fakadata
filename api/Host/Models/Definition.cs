@@ -1,6 +1,7 @@
 ﻿using LiteDB;
 using System;
 using System.Collections.Generic;
+using Timeseries.Api.Repository;
 
 namespace Timeseries.Api.Models
 {

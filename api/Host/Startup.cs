@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using Timeseries.Api.Models;
 using Timeseries.Api.Repository;
 
 namespace Host
@@ -30,7 +31,8 @@ namespace Host
                 c.SwaggerDoc("v1", new Info { Title = "Fakadata API", Version = "v1" });
             });
 
-            services.AddSingleton<IDefinitionRepository>(new DefinitionRepository(Configuration["connectionStrings:TsDescDb"]));
+            services.AddSingleton<IRepository<Definition>>(new Repository<Definition>(Configuration["connectionStrings:TsDescDb"]));
+            services.AddSingleton<IRepository<Signal>>(new Repository<Signal>(Configuration["connectionStrings:TsDescDb"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,10 +11,9 @@ namespace Timeseries.Api.Controllers
     [ApiController]
     public class PreviewController : ControllerBase
     {
-        const int DEFAULT_PREVIEW_COUNT = 100;
-        private readonly IDefinitionRepository _repository;
+        private readonly IRepository<Definition> _repository;
 
-        public PreviewController(IDefinitionRepository repository)
+        public PreviewController(IRepository<Definition> repository)
         {
             _repository = repository;
         }
@@ -28,7 +27,7 @@ namespace Timeseries.Api.Controllers
             var desc = new Definition { Expressions = source };
 
             var generator = new DatapointGenerator(desc);
-            var ts = generator.Sample(DEFAULT_PREVIEW_COUNT);
+            var ts = generator.Sample(Constants.DEFAULT_PREVIEW_COUNT);
 
             return new JsonResult(ts);
         }

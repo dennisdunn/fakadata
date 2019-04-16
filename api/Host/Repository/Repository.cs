@@ -5,16 +5,18 @@ using Timeseries.Api.Models;
 
 namespace Timeseries.Api.Repository
 {
-    public class DefinitionRepository : IDefinitionRepository
+    public class Repository<T> : IRepository<T> where T : IDocument
     {
+        private readonly string _collectionName;
         private readonly string _connectionString;
 
-        public DefinitionRepository(string connectionString)
+        public Repository(string connectionString)
         {
+            _collectionName = nameof(T);
             _connectionString = connectionString;
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<Definition>("descriptions").EnsureIndex("Name");
+                db.GetCollection<T>(_collectionName).EnsureIndex("Name");
             }
         }
 
@@ -22,55 +24,48 @@ namespace Timeseries.Api.Repository
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<Definition>("descriptions").FindAll().Select(x => new { label = x.Name, value = x._id });
+                return db.GetCollection<T>(_collectionName).FindAll().Select(x => new { label = x.Name, value = x._id });
             }
         }
 
-        public IDefinition Create(Definition item)
+        public T Create(T item)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<Definition>("descriptions").Upsert(item);
+                db.GetCollection<T>(_collectionName).Upsert(item);
                 return item;
             }
         }
 
-        public IDefinition Read(int id)
+        public T Read(int id)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return id > 0
-                    ? db.GetCollection<Definition>("descriptions").FindById(id)
-                    : new Definition();
+                return db.GetCollection<T>(_collectionName).FindById(id);
             }
         }
 
-        public IDefinition Read(string name)
+        public T Read(string key)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<Definition>("descriptions").FindOne(Query.EQ("Name", name));
+                return db.GetCollection<T>(_collectionName).FindOne(q => q.Name == key);
             }
         }
 
-        public void Update(Definition item)
+        public void Update(T item)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<Definition>("descriptions").Upsert(item);
+                db.GetCollection<T>(_collectionName).Upsert(item);
             }
         }
 
-        public void Delete(IDefinition item)
-        {
-            Delete(item._id);
-        }
-
-        public void Delete(int id)
+        public void Delete(T item)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<Definition>("descriptions").Delete(id);
+                db.GetCollection<T>(_collectionName).Delete(item._id);
             }
         }
     }

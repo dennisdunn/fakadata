@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace Timeseries.Api.Models
 {
-    public interface IDefinition
+    public interface IDefinition : IDocument
     {
-        int _id { get; set; }
-        string Name { get; set; }
         TimeSpan Period { get; set; }
         List<string> Expressions { get; set; }
         DateTime Start { get; set; }

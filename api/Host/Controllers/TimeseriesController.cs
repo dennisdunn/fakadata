@@ -12,10 +12,10 @@ namespace Timeseries.Api.Controllers
     public class TimeseriesController : ControllerBase
     {
         const int DEFAULT_PREVIEW_COUNT = 100;
-        private readonly IDefinitionRepository _repository;
+        private readonly IRepository<Definition> _repository;
         private readonly IMemoryCache _memoryCache;
 
-        public TimeseriesController(IDefinitionRepository repository, IMemoryCache memoryCache)
+        public TimeseriesController(IRepository<Definition> repository, IMemoryCache memoryCache)
         {
             _repository = repository;
             _memoryCache = memoryCache;

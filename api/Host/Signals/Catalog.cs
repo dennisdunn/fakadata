@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Timeseries.Api.Evaluator;
 
 namespace Timeseries.Api.Signals
 {
@@ -10,13 +9,9 @@ namespace Timeseries.Api.Signals
     {
         internal const string EMBEDDED_RESOURCE = "Timeseries.Api.Signals.signal_data.csv";
 
-        public static Catalog Current { get; } = new Catalog();
+        public static IEnumerable<string> Names { get; private set; }
 
-        public IEnumerable<string> Keys { get; private set; }
-
-        public IGenerator<double> this[string key] { get => new SignalGenerator(key); }
-
-        public Catalog()
+        static Catalog()
         {
             var assembly = Assembly.GetExecutingAssembly();
 
@@ -24,7 +19,7 @@ namespace Timeseries.Api.Signals
             using (var reader = new StreamReader(stream))
             {
                 var row = reader.ReadLine();
-                Keys = row.Split(',').Skip(1).ToList();
+                Names = row.Split(',').Skip(1);
             }
         }
     }

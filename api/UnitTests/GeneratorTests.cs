@@ -10,12 +10,12 @@ namespace UnitTests
     [TestClass]
     public class GeneratorTests
     {
-        ITsDescription Env;
+        IDefinition Env;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            Env = new TsDescription
+            Env = new Definition
             {
                 Start = new DateTime(1970, 1, 1),
                 Period = TimeSpan.FromMinutes(1),

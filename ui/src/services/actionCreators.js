@@ -1,21 +1,23 @@
 import * as actions from "./actionTypes";
 
-const ENGINE_URI = "http://localhost:8081/api/eval";
-const CONFIG_URI = "http://localhost:8081/api/timeseries";
+const API_HOST ='http://192.168.99.104:8081';
+const PREVIEW_URL = "api/preview";
+const DEFINITION_URL = "api/definitions";
 
 export const getPreview = funcs => {
-  const uri = `${ENGINE_URI}?${funcs.map(f => `source=${f}`).join("&")}`;
+  console.log(window.location);
+  const uri = `${API_HOST}/${PREVIEW_URL}?${funcs.map(f => `source=${f}`).join("&")}`;
   return createThunk(uri, null, actions.PREVIEW_LOADED);
 };
 
-export const getTimeseries = id => {
-  const uri = `${CONFIG_URI}/${id}`;
-  return createThunk(uri, null, actions.TIMESERIES_LOADED);
+export const getDefinition = id => {
+  const uri = `${API_HOST}/${DEFINITION_URL}/${id}`;
+  return createThunk(uri, null, actions.DEFINITION_LOADED);
 };
 
-export const getTimeseriesList = () => {
-  const uri = `${CONFIG_URI}`;
-  return createThunk(uri, null, actions.TIMESERIES_LIST_LOADED);
+export const getDefinitionList = () => {
+  const uri = `${API_HOST}/${DEFINITION_URL}`;
+  return createThunk(uri, null, actions.DEFINITION_LIST_LOADED);
 };
 
 export const createThunk = (uri, options, type) => {
@@ -31,21 +33,21 @@ export const createThunk = (uri, options, type) => {
   };
 };
 
-export const saveTimeseries = timeseries => {
-  const uri = `${CONFIG_URI}`;
+export const saveDefinition = definition => {
+  const uri = `${API_HOST}/${DEFINITION_URL}`;
   const options = {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify(timeseries)
+    body: JSON.stringify(definition)
   };
-  return createThunk(uri, options, actions.TIMESERIES_SAVED);
+  return createThunk(uri, options, actions.DEFINITION_SAVED);
 };
 
-export const updateTimeseries = payload =>{
+export const updateDefinition = payload =>{
   return dispatch =>{
-    dispatch({type:actions.TIMESERIES_UPDATED, payload});
+    dispatch({type:actions.DEFINITION_UPDATED, payload});
   }
 }
 
@@ -55,8 +57,8 @@ export const clearPreview = () => {
   };
 };
 
-export const clearTimeseries= () => {
+export const clearDefinition= () => {
   return dispatch => {
-    dispatch({ type: actions.TIMESERIES_CLEARED });
+    dispatch({ type: actions.DEFINITION_CLEARED });
   };
 };

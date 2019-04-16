@@ -5,16 +5,16 @@ using Timeseries.Api.Models;
 
 namespace Timeseries.Api.Repository
 {
-    public class TsRepository : ITsRepository
+    public class DefinitionRepository : IDefinitionRepository
     {
         private readonly string _connectionString;
 
-        public TsRepository(string connectionString)
+        public DefinitionRepository(string connectionString)
         {
             _connectionString = connectionString;
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<TsDescription>("descriptions").EnsureIndex("Name");
+                db.GetCollection<Definition>("descriptions").EnsureIndex("Name");
             }
         }
 
@@ -22,44 +22,46 @@ namespace Timeseries.Api.Repository
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<TsDescription>("descriptions").FindAll().Select(x => new { x._id, x.Name });
+                return db.GetCollection<Definition>("descriptions").FindAll().Select(x => new { label = x.Name, value = x._id });
             }
         }
 
-        public ITsDescription Create(TsDescription item)
+        public IDefinition Create(Definition item)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<TsDescription>("descriptions").Upsert(item);
+                db.GetCollection<Definition>("descriptions").Upsert(item);
                 return item;
             }
         }
 
-        public ITsDescription Read(int id)
+        public IDefinition Read(int id)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<TsDescription>("descriptions").FindById(id);
+                return id > 0
+                    ? db.GetCollection<Definition>("descriptions").FindById(id)
+                    : new Definition();
             }
         }
 
-        public ITsDescription Read(string name)
+        public IDefinition Read(string name)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<TsDescription>("descriptions").FindOne(Query.EQ("Name", name));
+                return db.GetCollection<Definition>("descriptions").FindOne(Query.EQ("Name", name));
             }
         }
 
-        public void Update(TsDescription item)
+        public void Update(Definition item)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<TsDescription>("descriptions").Upsert(item);
+                db.GetCollection<Definition>("descriptions").Upsert(item);
             }
         }
 
-        public void Delete(ITsDescription item)
+        public void Delete(IDefinition item)
         {
             Delete(item._id);
         }
@@ -68,7 +70,7 @@ namespace Timeseries.Api.Repository
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<TsDescription>("descriptions").Delete(id);
+                db.GetCollection<Definition>("descriptions").Delete(id);
             }
         }
     }

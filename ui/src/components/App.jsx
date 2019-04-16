@@ -4,10 +4,11 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
+
 import * as actions from '../services/actionCreators';
+import DefinitionEditor from './DefinitionEditor';
+import DefinitionList from './DefinitionList';
 import ExpressionGraph from './ExpressionGraph';
-import TimeseriesEditor from './TimeseriesEditor';
-import TimeseriesList from './TimeseriesList';
 
 
 const styles = {
@@ -19,15 +20,15 @@ const styles = {
 class App extends Component {
 
   componentDidMount() {
-    this.props.getTimeseriesList();
+    this.props.getDefinitionList();
   }
 
   select(id) {
     if (+id === 0) {
       this.props.clearPreview();
-      this.props.clearTimeseries();
+      this.props.clearDefinition();
     } else {
-      this.props.getTimeseries(id);
+      this.props.getDefinition(id);
     }
   }
 
@@ -37,13 +38,13 @@ class App extends Component {
         <Navbar bg="primary" variant="dark">
           <Navbar.Brand>Fakadata</Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
-            <TimeseriesList items={this.props.library} onSelect={this.select.bind(this)} />
+            <DefinitionList items={this.props.library} onSelect={this.select.bind(this)} />
           </Navbar.Collapse>
         </Navbar>
         <Container style={styles.container} fluid>
           <Row>
             <Col xs={2}>
-              <TimeseriesEditor />
+              <DefinitionEditor />
             </Col>
             <Col xs={2} />
             <Col xs={8}>

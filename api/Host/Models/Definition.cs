@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Timeseries.Api.Models
 {
-    public class TsDescription : ITsDescription
+    public class Definition : IDefinition
     {
         public int _id { get; set; }
         public string Name { get; set; } = "Default";

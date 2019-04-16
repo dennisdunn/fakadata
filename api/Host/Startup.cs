@@ -30,7 +30,7 @@ namespace Host
                 c.SwaggerDoc("v1", new Info { Title = "Fakadata API", Version = "v1" });
             });
 
-            services.AddSingleton<ITsRepository>(new TsRepository(Configuration["connectionStrings:TsDescDb"]));
+            services.AddSingleton<IDefinitionRepository>(new DefinitionRepository(Configuration["connectionStrings:TsDescDb"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

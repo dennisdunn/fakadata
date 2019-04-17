@@ -8,23 +8,35 @@ namespace SimpleStackMachine
 {
     public class StackMachine
     {
-        internal IndexStack<object> _stack = new IndexStack<object>();
-        internal Dictionary<string, TypeInfo> _commands = new Dictionary<string, TypeInfo>(StringComparer.OrdinalIgnoreCase);
+        internal StackList<object> _stack = new StackList<object>();
+        internal Dictionary<string, MethodInfo> _commands = new Dictionary<string, MethodInfo>(StringComparer.OrdinalIgnoreCase);
 
-        public IndexStack<object> Context => _stack;
+        public StackList<object> Context => _stack;
 
         public StackMachine()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            Register(assembly);
+            Assembly[] assemblies = {
+                Assembly.GetExecutingAssembly(),
+                Assembly.GetCallingAssembly(),
+                Assembly.GetEntryAssembly()
+            };
+
+            Register(assemblies);
         }
 
-        public void Register(Assembly assembly)
+        public void Register(params Assembly[] assemblies)
         {
-            foreach (var t in assembly.DefinedTypes.Where(t => typeof(ICommand).IsAssignableFrom(t)))
-            {
-                _commands[t.Name] = t;
-            }
+            foreach (var assembly in assemblies)
+                foreach (var t in assembly.GetTypes().Where(t => t.IsClass && t.IsAbstract && t.IsSealed))
+                    foreach (var m in t.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                    {
+                        if (m.ReturnType == typeof(void)
+                            && m.GetParameters().Count() == 1
+                            && m.GetParameters().Any(x => x.ParameterType == typeof(IStackList<object>)))
+                        {
+                            _commands[m.Name] = m;
+                        }
+                    }
         }
 
         public void Eval(params string[] text)
@@ -34,8 +46,7 @@ namespace SimpleStackMachine
                 if (_commands.ContainsKey(src))
                 {
                     var info = _commands[src];
-                    var cmd = (ICommand)Activator.CreateInstance(info.AsType());
-                    cmd.Run(_stack);
+                    info.Invoke(info, new[] { _stack });
                 }
                 else
                 {

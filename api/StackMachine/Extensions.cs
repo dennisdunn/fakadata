@@ -5,24 +5,19 @@ namespace SimpleStackMachine
 {
     public static class Extensions
     {
-        public static T Pop<T>(this IndexStack<object> stack)
+        public static T PopAs<T>(this IStackList<object> stack)
         {
             var obj = stack.Pop();
             var result = Convert.ChangeType(obj, typeof(T));
             return (T)result;
         }
         
-        public static void PushRange<T>(this IndexStack<object> stack, IEnumerable<T> collection)
+        public static void PushRange<T>(this IStackList<object> stack, IEnumerable<T> collection)
         {
             foreach(var obj in collection)
             {
                 stack.Push(obj);
             }
-        }
-
-        public static void Run(this IndexStack<object> stack, ICommand cmd)
-        {
-            cmd.Run(stack);
         }
     }
 }

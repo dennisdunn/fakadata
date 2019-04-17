@@ -4,7 +4,9 @@ using System.Text;
 
 namespace SimpleStackMachine
 {
-    public class IndexStack<T> : List<T>
+    public class StackList : StackList<object> { }
+
+    public class StackList<T> : List<T>, IStackList<T>
     {
         public void Push(T obj)
         {

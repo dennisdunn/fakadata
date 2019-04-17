@@ -10,7 +10,7 @@ namespace UnitTests
         public void ShouldGetSomeNoise()
         {
             var b = new Sequences.Builder();
-            b.Nosie();
+            b.Noise();
             var seq = b.Build().Take(5).ToList();
 
             Assert.AreEqual(5, seq.Count);

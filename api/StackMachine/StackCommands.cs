@@ -1,38 +1,30 @@
 ﻿namespace SimpleStackMachine
 {
-    public class Swap : ICommand
+    public static class StackCommands
     {
-        public void Run(IndexStack<object> stack)
+        public static void Swap(IStackList<object> stack)
         {
             var obj = stack.Pop();
-            stack.Insert(1,obj);
+            stack.Insert(1, obj);
         }
-    }
-    public class Drop : ICommand
-    {
-        public void Run(IndexStack<object> stack)
+
+        public static void Drop(IStackList<object> stack)
         {
             stack.Pop();
         }
-    }
 
-    public class Pick : ICommand
-    {
-        public void Run(IndexStack<object> stack)
+        public static void Pick(IStackList<object> stack)
         {
-            var i = stack.Pop<int>();
+            var i = stack.PopAs<int>();
             var obj = stack[i];
             stack.Remove(obj);
             stack.Push(obj);
         }
-    }
 
-    public class Roll : ICommand
-    {
-        public void Run(IndexStack<object> stack)
+        public static void Roll(IStackList<object> stack)
         {
-            var i = stack.Pop<int>();
-            for(var j = 0; j < i; j++)
+            var i = stack.PopAs<int>();
+            for (var j = 0; j < i; j++)
             {
                 var obj = stack.Pop();
                 stack.Add(obj);

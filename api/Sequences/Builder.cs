@@ -1,18 +1,11 @@
 ﻿using SimpleStackMachine;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace Sequences
 {
     public class Builder
     {
         protected StackMachine _stackMachine = new StackMachine();
-
-        public Builder()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            _stackMachine.Register(assembly);
-        }
 
         public IEnumerable<double> Build()
         {
@@ -61,7 +54,7 @@ namespace Sequences
             return this;
         }
 
-        public Builder Nosie()
+        public Builder Noise()
         {
             _stackMachine.Eval(Magic.COMMAND_NOISE);
 

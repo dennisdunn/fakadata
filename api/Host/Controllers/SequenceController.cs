@@ -18,6 +18,13 @@ namespace Timeseries.Api.Controllers
             _repository = repository;
         }
 
+        [HttpGet]
+        public JsonResult Get()
+        {
+            var list = Sequences.SequenceFactory.List();
+            return new JsonResult(list);
+        }
+
         // POST: api/Sequence
         [HttpPost]
         public JsonResult Post([FromBody]string[] text)

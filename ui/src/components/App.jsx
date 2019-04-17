@@ -6,8 +6,8 @@ import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
 
 import * as actions from '../services/actionCreators';
-import DefinitionEditor from './DefinitionEditor';
-import DefinitionList from './DefinitionList';
+import SourceEditor from './SourceEditor';
+import SequencePicker from './SequencePicker';
 import ExpressionGraph from './ExpressionGraph';
 
 
@@ -23,13 +23,9 @@ class App extends Component {
     this.props.getDefinitionList();
   }
 
-  select(id) {
-    if (+id === 0) {
-      this.props.clearPreview();
-      this.props.clearDefinition();
-    } else {
-      this.props.getDefinition(id);
-    }
+  select(sequence) {
+    this.props.appendSource(sequence);
+    this.props.appendSource('load');
   }
 
   render() {
@@ -38,13 +34,13 @@ class App extends Component {
         <Navbar bg="primary" variant="dark">
           <Navbar.Brand>Fakadata</Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
-            <DefinitionList items={this.props.library} onSelect={this.select.bind(this)} />
+            <SequencePicker items={this.props.library} onSelect={this.select.bind(this)} />
           </Navbar.Collapse>
         </Navbar>
         <Container style={styles.container} fluid>
           <Row>
             <Col xs={2}>
-              <DefinitionEditor />
+              <SourceEditor text={this.props.source} rows={10} />
             </Col>
             <Col xs={2} />
             <Col xs={8}>
@@ -58,8 +54,8 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { library, preview } = state;
-  return { library, preview };
+  const { library, preview, source } = state;
+  return { library, preview, source };
 };
 
 export default connect(mapStateToProps, actions)(App);

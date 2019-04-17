@@ -51,9 +51,19 @@ const definitions = (state = defaultDefinition, action) => {
     }
 };
 
+const source = (state = '', action) => {
+    switch (action.type) {
+        case actions.SOURCE_APPEND:
+            return `${state}\n${action.payload}`;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     definitions,
     operations,
     library,
-    preview
+    preview,
+    source
 });

@@ -1,8 +1,8 @@
 import * as actions from "./actionTypes";
 
-const API_HOST =`http://${window.location.hostname}:8081`;
+const API_HOST = `http://${window.location.hostname}:8080`;
 const PREVIEW_URL = "api/preview";
-const DEFINITION_URL = "api/definitions";
+const SEQUENCE_URL = "api/sequence";
 
 export const getPreview = funcs => {
   const uri = `${API_HOST}/${PREVIEW_URL}?${funcs.map(f => `source=${f}`).join("&")}`;
@@ -10,14 +10,20 @@ export const getPreview = funcs => {
 };
 
 export const getDefinition = id => {
-  const uri = `${API_HOST}/${DEFINITION_URL}/${id}`;
+  const uri = `${API_HOST}/${SEQUENCE_URL}/${id}`;
   return createThunk(uri, null, actions.DEFINITION_LOADED);
 };
 
 export const getDefinitionList = () => {
-  const uri = `${API_HOST}/${DEFINITION_URL}`;
+  const uri = `${API_HOST}/${SEQUENCE_URL}`;
   return createThunk(uri, null, actions.DEFINITION_LIST_LOADED);
 };
+
+export const appendSource = text => {
+  return dispatch => {
+    dispatch({ type: actions.SOURCE_APPEND, payload: text });
+  }
+}
 
 export const createThunk = (uri, options, type) => {
   return dispatch => {
@@ -33,7 +39,7 @@ export const createThunk = (uri, options, type) => {
 };
 
 export const saveDefinition = definition => {
-  const uri = `${API_HOST}/${DEFINITION_URL}`;
+  const uri = `${API_HOST}/${SEQUENCE_URL}`;
   const options = {
     headers: {
       'Content-Type': 'application/json'
@@ -44,9 +50,9 @@ export const saveDefinition = definition => {
   return createThunk(uri, options, actions.DEFINITION_SAVED);
 };
 
-export const updateDefinition = payload =>{
-  return dispatch =>{
-    dispatch({type:actions.DEFINITION_UPDATED, payload});
+export const updateDefinition = payload => {
+  return dispatch => {
+    dispatch({ type: actions.DEFINITION_UPDATED, payload });
   }
 }
 
@@ -56,7 +62,7 @@ export const clearPreview = () => {
   };
 };
 
-export const clearDefinition= () => {
+export const clearDefinition = () => {
   return dispatch => {
     dispatch({ type: actions.DEFINITION_CLEARED });
   };

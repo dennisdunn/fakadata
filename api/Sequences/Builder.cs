@@ -16,7 +16,14 @@ namespace Sequences
 
         public IEnumerable<double> Build()
         {
-            return (IEnumerable<double>) _stackMachine.Context.Pop();
+            return (IEnumerable<double>)_stackMachine.Context.Pop();
+        }
+
+        public Builder Eval(params string[] text)
+        {
+            _stackMachine.Eval(text);
+
+            return this;
         }
 
         public Builder Load(string key)

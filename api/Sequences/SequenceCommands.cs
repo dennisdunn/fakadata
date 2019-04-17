@@ -1,5 +1,6 @@
 ﻿using Flee.PublicTypes;
 using SimpleStackMachine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,6 +55,8 @@ namespace Sequences
             var seq = stack.Pop() as IEnumerable<double>;
 
             var ctx = new ExpressionContext();
+            ctx.Imports.AddType(typeof(Math));
+            ctx.Variables["x"]=0.0;
             var gexpr = ctx.CompileGeneric<double>(expr);
 
             var result = seq.Select(x =>

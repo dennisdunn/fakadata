@@ -1,14 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using Timeseries.Api.Evaluator;
-using Timeseries.Api.Models;
 
 namespace UnitTests
 {
     [TestClass]
- public   class SequrenceTests
+    public class SequrenceTests
     {
         [TestMethod]
         public void ShouldGetSomeNoise()
@@ -17,7 +13,18 @@ namespace UnitTests
             b.Nosie();
             var seq = b.Build().Take(5).ToList();
 
-            Assert.AreEqual(5,seq.Count);
+            Assert.AreEqual(5, seq.Count);
+        }
+
+        [TestMethod]
+        public void ShouldMapAnF()
+        {
+            var b = new Sequences.Builder();
+            b.Cardinals();
+            b.Map("x^2");
+            var seq = b.Build().Take(5).ToList();
+
+            Assert.AreEqual(5, seq.Count);
         }
     }
 }

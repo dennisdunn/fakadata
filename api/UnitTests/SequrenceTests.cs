@@ -22,6 +22,8 @@ namespace UnitTests
             var b = new Sequences.Builder();
             b.Cardinals();
             b.Map("x^2");
+            b.Noise();
+            b.Merge();
             var seq = b.Build().Take(5).ToList();
 
             Assert.AreEqual(5, seq.Count);

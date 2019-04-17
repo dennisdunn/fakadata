@@ -18,7 +18,7 @@ namespace Sequences
        public static void List(IStackList<object> stack)
         {
             var list = SequenceFactory.List();
-            stack.PushRange(list);
+            stack.PushRange(string.Join(',', list.ToArray()));
         }
 
        public static void Merge(IStackList<object> stack)

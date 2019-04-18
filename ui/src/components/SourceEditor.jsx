@@ -4,14 +4,18 @@ import Form from 'react-bootstrap/Form';
 export class SourceEditor extends React.Component {
 
     render() {
-        console.log(this.props.text);
         return (
-            <Form.Control
-                defaultValue={this.props.text}
-                size="sm"
-                as="textarea"
-                rows={this.props.rows}
-            />
+            <Form>
+                <Form.Group id="sourceEditor">
+                    <Form.Control
+                        value={this.props.text}
+                        size="sm"
+                        as="textarea"
+                        rows={this.props.rows}
+                        onChange={this.props.onChange}
+                    />
+                </Form.Group>
+            </Form>
         );
     }
 }

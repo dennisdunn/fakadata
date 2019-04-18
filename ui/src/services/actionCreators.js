@@ -1,27 +1,28 @@
 import * as actions from "./actionTypes";
 
-const API_HOST = `http://${window.location.hostname}:8080`;
-const PREVIEW_URL = "api/preview";
+const API_HOST = `http://${window.location.hostname}:8081`;
 const SEQUENCE_URL = "api/sequence";
 
-export const getPreview = funcs => {
-  const uri = `${API_HOST}/${PREVIEW_URL}?${funcs.map(f => `source=${f}`).join("&")}`;
-  return createThunk(uri, null, actions.PREVIEW_LOADED);
-};
-
-export const getDefinition = id => {
-  const uri = `${API_HOST}/${SEQUENCE_URL}/${id}`;
-  return createThunk(uri, null, actions.DEFINITION_LOADED);
-};
-
-export const getDefinitionList = () => {
+export const getSequence = src => {
   const uri = `${API_HOST}/${SEQUENCE_URL}`;
-  return createThunk(uri, null, actions.DEFINITION_LIST_LOADED);
+  const options = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify(src)
+  };
+  return createThunk(uri, options, actions.SEQUENCE_LOADED);
 };
 
-export const appendSource = text => {
+export const getSequenceList = () => {
+  const uri = `${API_HOST}/${SEQUENCE_URL}`;
+  return createThunk(uri, null, actions.SEQUENCE_LIST_LOADED);
+};
+
+export const setSource = text => {
   return dispatch => {
-    dispatch({ type: actions.SOURCE_APPEND, payload: text });
+    dispatch({ type: actions.SOURCE_SET, payload: text });
   }
 }
 
@@ -35,35 +36,5 @@ export const createThunk = (uri, options, type) => {
       .catch(error =>
         dispatch({ type: actions.OPERATION_ERRORED, payload: error, error: true })
       );
-  };
-};
-
-export const saveDefinition = definition => {
-  const uri = `${API_HOST}/${SEQUENCE_URL}`;
-  const options = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    method: 'POST',
-    body: JSON.stringify(definition)
-  };
-  return createThunk(uri, options, actions.DEFINITION_SAVED);
-};
-
-export const updateDefinition = payload => {
-  return dispatch => {
-    dispatch({ type: actions.DEFINITION_UPDATED, payload });
-  }
-}
-
-export const clearPreview = () => {
-  return dispatch => {
-    dispatch({ type: actions.PREVIEW_CLEARED });
-  };
-};
-
-export const clearDefinition = () => {
-  return dispatch => {
-    dispatch({ type: actions.DEFINITION_CLEARED });
   };
 };

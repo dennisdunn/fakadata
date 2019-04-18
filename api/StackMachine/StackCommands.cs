@@ -30,5 +30,10 @@
                 stack.Add(obj);
             }
         }
+
+        public static void Clear(IStackList<object> stack)
+        {
+            stack.Clear();
+        }
     }
 }

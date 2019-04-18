@@ -5,7 +5,7 @@ using Timeseries.Api.Models;
 
 namespace Timeseries.Api.Repository
 {
-    public class Repository<T> : IRepository<T> where T : IDocument
+    public class Repository<T> : IRepository<T>
     {
         private readonly string _collectionName;
         private readonly string _connectionString;
@@ -14,17 +14,13 @@ namespace Timeseries.Api.Repository
         {
             _collectionName = nameof(T);
             _connectionString = connectionString;
-            using (var db = new LiteDatabase(_connectionString))
-            {
-                db.GetCollection<T>(_collectionName).EnsureIndex("Name");
-            }
         }
 
-        public IEnumerable<object> List()
+        public IEnumerable<T> List()
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                return db.GetCollection<T>(_collectionName).FindAll().Select(x => new { label = x.Name, value = x._id });
+                return db.GetCollection<T>(_collectionName).FindAll();
             }
         }
 
@@ -45,14 +41,6 @@ namespace Timeseries.Api.Repository
             }
         }
 
-        public T Read(string key)
-        {
-            using (var db = new LiteDatabase(_connectionString))
-            {
-                return db.GetCollection<T>(_collectionName).FindOne(q => q.Name == key);
-            }
-        }
-
         public void Update(T item)
         {
             using (var db = new LiteDatabase(_connectionString))
@@ -61,11 +49,11 @@ namespace Timeseries.Api.Repository
             }
         }
 
-        public void Delete(T item)
+        public void Delete(int id)
         {
             using (var db = new LiteDatabase(_connectionString))
             {
-                db.GetCollection<T>(_collectionName).Delete(item._id);
+                db.GetCollection<T>(_collectionName).Delete(id);
             }
         }
     }

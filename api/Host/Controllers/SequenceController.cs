@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using Timeseries.Api.Models;
 using Timeseries.Api.Repository;
-using Timeseries.Api.Signals;
 
 namespace Timeseries.Api.Controllers
 {
@@ -11,15 +9,8 @@ namespace Timeseries.Api.Controllers
     [ApiController]
     public class SequenceController : ControllerBase
     {
-        private readonly IRepository<Signal> _repository;
-
-        public SequenceController(IRepository<Signal> repository)
-        {
-            _repository = repository;
-        }
-
         [HttpGet]
-        public JsonResult Get()
+        public IActionResult Get()
         {
             var list = Sequences.SequenceFactory.List();
             return new JsonResult(list);
@@ -27,7 +18,7 @@ namespace Timeseries.Api.Controllers
 
         // POST: api/Sequence
         [HttpPost]
-        public JsonResult Post([FromBody]string[] text)
+        public IActionResult Post([FromBody]string[] text)
         {
             var builder = new Sequences.Builder();
             builder.Eval(text);

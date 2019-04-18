@@ -7,6 +7,6 @@ namespace Timeseries.Api.Controllers
 {
     public class Constants
     {
-        public const int DEFAULT_PREVIEW_COUNT = 100;
+        public const int DEFAULT_PREVIEW_COUNT = 500;
     }
 }

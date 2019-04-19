@@ -1,40 +1,43 @@
 import * as actions from "./actionTypes";
 
 const API_HOST = `http://${window.location.hostname}:8081`;
-const SEQUENCE_URL = "api/sequence";
+const SEQUENCE_URL = "api/sequencer";
 
-export const getSequence = src => {
+export const evalSequencerCommands = commands => {
   const uri = `${API_HOST}/${SEQUENCE_URL}`;
   const options = {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
-    body: JSON.stringify(src)
+    body: JSON.stringify(commands)
   };
-  return createThunk(uri, options, actions.SEQUENCE_LOADED);
+  return createThunk(uri, options, actions.SEQUENCER_EVAL_SUCCESS);
 };
 
-export const getSequenceList = () => {
+export const getSequencePreview = () => {
   const uri = `${API_HOST}/${SEQUENCE_URL}`;
-  return createThunk(uri, null, actions.SEQUENCE_LIST_LOADED);
+  return createThunk(uri, null, actions.SEQUENCER_PREVIEW_LOADED);
 };
 
-export const setSource = text => {
-  return dispatch => {
-    dispatch({ type: actions.SOURCE_SET, payload: text });
-  }
-}
+export const getNamedSequences = () => {
+  const uri = `${API_HOST}/${SEQUENCE_URL}/names`;
+  return createThunk(uri, null, actions.SEQUENCER_NAMES_LOADED);
+};
+
+export const getSequencerCommands = () => {
+  const uri = `${API_HOST}/${SEQUENCE_URL}/commands`;
+  return createThunk(uri, null, actions.SEQUENCER_COMMANDS_LOADED);
+};
 
 export const createThunk = (uri, options, type) => {
   return dispatch => {
-    dispatch({ type: actions.OPERATION_STARTED });
+    dispatch({ type: actions.SEQUENCER_ERROR_CLEARED});
     fetch(uri, options)
       .then(resp => resp.json())
       .then(payload => dispatch({ type, payload }))
-      .then(() => dispatch({ type: actions.OPERATION_COMPLETE }))
       .catch(error =>
-        dispatch({ type: actions.OPERATION_ERRORED, payload: error, error: true })
+        dispatch({ type: actions.SEQUENCER_ERROR, payload: error})
       );
   };
 };

@@ -2,37 +2,36 @@ import { combineReducers } from 'redux';
 
 import * as actions from './actionTypes';
 
-const options = (state = [], action) => {
+const defaultSequencerState = { names: [], commands: [], stack: [], data: [] };
+const defaultErrorState = { isError: false, text: null };
+
+const sequencer = (state = defaultSequencerState, action) => {
     switch (action.type) {
-        case actions.SEQUENCE_LIST_LOADED:
-            return action.payload;
+        case actions.SEQUENCER_COMMANDS_LOADED:
+            return { ...state, commands: action.payload };
+        case actions.SEQUENCER_PREVIEW_LOADED:
+            return { ...state, data: action.payload.map(mv => { return { value: mv }; }) };
+        case actions.SEQUENCER_NAMES_LOADED:
+            return { ...state, names: action.payload.sort() };
+        case actions.SEQUENCER_EVAL_SUCCESS:
+            return { ...state, stack: action.payload };
         default:
             return state;
     }
 };
 
-const defaultPreview = [];
-const preview = (state = defaultPreview, action) => {
+const error = (state = defaultErrorState, action) => {
     switch (action.type) {
-        case actions.SEQUENCE_LOADED:
-            const values = action.payload.map(n => { return { value: n }; });
-            return values;
-        default:
-            return state;
-    }
-};
-
-const source = (state = '', action) => {
-    switch (action.type) {
-        case actions.SOURCE_SET:
-            return action.payload;
+        case actions.SEQUENCER_ERROR:
+            return { isError: true, text: action.payload };
+        case actions.SEQUENCER_ERROR_CLEARED:
+            return { isError: false, text: null };
         default:
             return state;
     }
 }
 
 export default combineReducers({
-    options,
-    preview,
-    source
+    sequencer,
+    error
 });

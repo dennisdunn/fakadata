@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
@@ -8,7 +9,7 @@ import { connect } from 'react-redux';
 import * as actions from '../services/actionCreators';
 import ExpressionGraph from './ExpressionGraph';
 import SequencePicker from './SequencePicker';
-import SourceEditor from './SourceEditor';
+import StackDisplay from './StackDisplay';
 
 const styles = {
   container: {
@@ -19,20 +20,15 @@ const styles = {
 class App extends Component {
 
   componentDidMount() {
-    this.props.getSequenceList();
+    this.props.getNamedSequences();
   }
 
-  select(sequence) {
-    this.props.setSource(`${sequence}\nload`);
+  select(name) {
+    this.props.evalSequencerCommands([name, "load"]);
   }
 
-  textChanged(args) {
-    this.props.setSource(args.target.value);
-  }
-
-  preview() {
-    const lines = this.props.source.split('\n');
-    this.props.getSequence(lines);
+  eval(evt){
+    this.props.evalSequencerCommands([evt]);
   }
 
   render() {
@@ -41,18 +37,23 @@ class App extends Component {
         <Navbar bg="primary" variant="dark">
           <Navbar.Brand>Fakadata</Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
-            <SequencePicker items={this.props.options} onSelect={this.select.bind(this)} />
+            <SequencePicker items={this.props.names} onSelect={this.select.bind(this)} />
           </Navbar.Collapse>
         </Navbar>
         <Container style={styles.container} fluid>
           <Row>
             <Col xs={2}>
-              <SourceEditor text={this.props.source} rows={10} onChange={this.textChanged.bind(this)} />
-              <Button variant='discrete' onClick={this.preview.bind(this)}>Preview</Button>
+            <ButtonGroup vertical>
+            <Button onClick={this.eval.bind(this,'seq')}>Seq</Button>
+            <Button onClick={this.eval.bind(this,'para')}>Para</Button>
+            <Button onClick={this.eval.bind(this,'noise')}>Noise</Button>
+            </ButtonGroup>
+              <StackDisplay stack={this.props.stack} />
+              <Button variant='discrete' onClick={this.props.getSequencePreview}>Preview</Button>
             </Col>
             <Col xs={2} />
             <Col xs={8}>
-              <ExpressionGraph data={this.props.preview} />
+              <ExpressionGraph data={this.props.data} />
             </Col>
           </Row>
         </Container>
@@ -62,8 +63,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  const { options, preview, source } = state;
-  return { options, preview, source };
+  return { ...state.sequencer, ...state.error };
 };
 
 export default connect(mapStateToProps, actions)(App);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace SimpleStackMachine
 {
@@ -10,8 +9,16 @@ namespace SimpleStackMachine
         public static T PopAs<T>(this IStackList<object> stack)
         {
             var obj = stack.Pop();
-            var result = Convert.ChangeType(obj, typeof(T));
-            return (T)result;
+            T result;
+            try
+            {
+                result = (T)Convert.ChangeType(obj, typeof(T));
+            }
+            catch
+            {
+                result = default;
+            }
+            return result;
         }
 
         public static void PushRange<T>(this IStackList<object> stack, IEnumerable<T> collection)

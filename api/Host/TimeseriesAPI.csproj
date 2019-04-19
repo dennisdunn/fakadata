@@ -8,6 +8,10 @@
     <RootNamespace>Timeseries.Api</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\temp\fakadata\api\Host\Timeseries.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="12.1.2" />
     <PackageReference Include="Flee" Version="1.2.2" />

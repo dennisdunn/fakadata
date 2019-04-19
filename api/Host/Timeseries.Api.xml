@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Timeseries.Api</name>
+    </assembly>
+    <members>
+        <member name="M:Timeseries.Api.Controllers.SequencerController.GetNames">
+            <summary>
+            Get a list of the named sequences.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.SequencerController.GetOperations">
+            <summary>
+            Get a list of operations known to the sequencer engine.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.SequencerController.Get">
+            <summary>
+            Get an array of values from the sequencer engine.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.SequencerController.PostEval(System.String[])">
+            <summary>
+            Evaluate the sequencer engine operations.
+            </summary>
+            <param name="operations"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.SequencerController.Post(System.String,System.String[])">
+            <summary>
+            Save the list of sequencer engine operations with the given name.
+            </summary>
+            <param name="operations"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.SequencerController.Delete(System.String)">
+            <summary>
+            Delete the named sequencer.
+            </summary>
+            <param name="operations"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.TimeseriesController.Get">
+            <summary>
+            Get the names of the cached sequences.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.TimeseriesController.Get(System.String,System.Nullable{System.Int32})">
+            <summary>
+            Get points from the cached sequence named 'key'.
+            </summary>
+            <param name="key"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.TimeseriesController.Post(System.String)">
+            <summary>
+            Load the sequence named 'key' into the cache.
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Timeseries.Api.Controllers.TimeseriesController.Delete(System.String)">
+            <summary>
+            Remove the sequence named 'key' from the cache.
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -15,15 +15,16 @@ namespace SimpleStackMachine
 
         public T Pop()
         {
-            var obj = this[0];
+            T obj = Peek();
             Remove(obj);
-
             return obj;
         }
 
         public T Peek()
         {
-            return this[0];
+            return Count > 0
+                ? this[0]
+                : default;
         }
     }
 }

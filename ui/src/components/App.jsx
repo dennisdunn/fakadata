@@ -41,7 +41,7 @@ class App extends Component {
         </Navbar>
         <Container style={styles.container} fluid>
           <Row>
-            <Col xs={2} md={1}>
+            <Col xs={3} sm={2} lg={1}>
               <ButtonGroup vertical>
                 <SequencePicker items={this.props.names} onSelect={this.select.bind(this)} />
                 <Button variant="success" onClick={this.eval.bind(this, 'seq')}>Base</Button>
@@ -50,10 +50,10 @@ class App extends Component {
                 <Button variant='secondary' onClick={this.props.getSequencePreview}>Preview</Button>
               </ButtonGroup>
             </Col>
-            <Col xs={4} md={2}>
+            <Col xs={6} sm={4} lg={2}>
               <StackDisplay stack={this.props.stack} />
             </Col>
-            <Col xs={2} md={1}>
+            <Col xs={3} sm={2} lg={1}>
               <ButtonGroup vertical>
                 <Button variant="secondary" onClick={this.eval.bind(this, 'swap')}>Swap</Button>
                 <Button variant="secondary" onClick={this.eval.bind(this, 'drop')}>Drop</Button>

@@ -4,6 +4,10 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\temp\fakadata\api\Sequences\Sequences.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="signal_data.csv" />
   </ItemGroup>

@@ -2,8 +2,11 @@
 using Microsoft.Extensions.Caching.Memory;
 using Sequences;
 using SimpleStackMachine;
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using Timeseries.Api.Repository;
+using System;
+using Timeseries.Api.Services;
 
 namespace Timeseries.Api.Controllers
 {
@@ -11,16 +14,13 @@ namespace Timeseries.Api.Controllers
     [ApiController]
     public class TimeseriesController : ControllerBase
     {
-        const int DEFAULT_PREVIEW_COUNT = 100;
         private readonly IRepository<object> _repository;
         private readonly IMemoryCache _memoryCache;
 
-        Lazy<StackMachine> SequencerEngine { get; set; }
+        private IStackMachine SequencerEngine => (IStackMachine)_memoryCache.GetOrCreate(Magic.SEQUENCE_BUILDER_KEY, entry => entry.Value = new StackMachine(typeof(SequenceCommands)));
 
         public TimeseriesController(IRepository<object> repository, IMemoryCache memoryCache)
         {
-            SequencerEngine = new Lazy<StackMachine>(() => (StackMachine)memoryCache.GetOrCreate(Magic.SEQUENCE_BUILDER_KEY, entry => entry.Value = new StackMachine(typeof(SequenceCommands))));
-
             _repository = repository;
             _memoryCache = memoryCache;
         }
@@ -33,7 +33,10 @@ namespace Timeseries.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            var names = SequenceFactory.List();
+            names = names.Concat(_memoryCache.Keys());
+
+            return new JsonResult(names);
         }
 
         // GET: api/Timeseries/key
@@ -46,7 +49,9 @@ namespace Timeseries.Api.Controllers
         [HttpGet("{key}")]
         public IActionResult Get(string key, int? count)
         {
-            return Ok();
+            var series = (IEnumerable<object>)_memoryCache.Get(key);
+
+            return new JsonResult(series.Take(count ?? 1));
         }
 
         // POST: api/Timeseries/key
@@ -58,7 +63,7 @@ namespace Timeseries.Api.Controllers
         [HttpPost("{key}")]
         public IActionResult Post(string key)
         {
-            return Ok();
+            throw new NotImplementedException();
         }
 
         // DELETE: api/Timeseries/key
@@ -70,6 +75,8 @@ namespace Timeseries.Api.Controllers
         [HttpDelete("{key}")]
         public IActionResult Delete(string key)
         {
+            _memoryCache.Remove(key);
+
             return Ok();
         }
     }

@@ -19,7 +19,7 @@
         public static void Pick(IStackList<object> stack)
         {
             var i = stack.PopAs<int>();
-            if (i >= stack.Count)
+            if (i > stack.Count)
             {
                 var obj = stack[i];
                 stack.Remove(obj);

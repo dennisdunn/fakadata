@@ -3,9 +3,11 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 import Navbar from 'react-bootstrap/Navbar';
 import Row from 'react-bootstrap/Row';
 import { connect } from 'react-redux';
+
 import * as actions from '../services/actionCreators';
 import ExpressionGraph from './ExpressionGraph';
 import SequencePicker from './SequencePicker';
@@ -14,21 +16,34 @@ import StackDisplay from './StackDisplay';
 const styles = {
   container: {
     marginTop: 20
+  },
+  wide: {
+    width: '100%',
+    marginTop: '1em'
   }
 };
 
 class App extends Component {
 
+  state = { text: '' };
+
   componentDidMount() {
     this.props.getNamedSequences();
   }
 
-  select(name) {
-    this.props.evalSequencerCommands([name, "load"]);
+  eval(event) {
+    this.props.evalSequencerCommands([event]);
   }
 
-  eval(evt) {
-    this.props.evalSequencerCommands([evt]);
+  keyup(event) {
+    if (event.key === 'Enter') {
+      this.props.evalSequencerCommands([this.state.text]);
+      this.setState({ text: '' });
+    }
+  }
+
+  change(event) {
+    this.setState({ text: event.target.value });
   }
 
   render() {
@@ -43,8 +58,8 @@ class App extends Component {
           <Row>
             <Col xs={3} sm={2} lg={1}>
               <ButtonGroup vertical>
-                <SequencePicker items={this.props.names} onSelect={this.select.bind(this)} />
-                <Button variant="success" onClick={this.eval.bind(this, 'seq')}>Base</Button>
+                <SequencePicker items={this.props.names} onSelect={this.eval.bind(this)} />
+                <Button variant="success" onClick={this.eval.bind(this, 'base')}>Base</Button>
                 <Button variant="success" onClick={this.eval.bind(this, 'para')}>Para</Button>
                 <Button variant="success" onClick={this.eval.bind(this, 'noise')}>Noise</Button>
                 <Button variant='secondary' onClick={this.props.getSequencePreview}>Preview</Button>
@@ -52,6 +67,22 @@ class App extends Component {
             </Col>
             <Col xs={6} sm={4} lg={2}>
               <StackDisplay stack={this.props.stack} />
+              <Form.Row>
+                <Form.Control value={this.state.text} onKeyUp={this.keyup.bind(this)} onChange={this.change.bind(this)}></Form.Control>
+              </Form.Row>
+              <ButtonGroup style={styles.wide}>
+                <Button variant="success" onClick={this.eval.bind(this, 'concat')}>Concat</Button>
+                <Button variant="success" onClick={this.eval.bind(this, 'merge')}>Merge</Button>
+              </ButtonGroup>
+              <ButtonGroup style={styles.wide}>
+                <Button variant="success" onClick={this.eval.bind(this, 'map')}>Map</Button>
+                <Button variant="success" onClick={this.eval.bind(this, 'sample')}>Sample</Button>
+              </ButtonGroup>
+              <ButtonGroup style={styles.wide}>
+                <Button variant="light" onClick={this.eval.bind(this, 'load')}>Load</Button>
+                <Button variant="light" onClick={this.eval.bind(this, 'save')}>Save</Button>
+                <Button variant="light" onClick={this.eval.bind(this, 'delete')}>Delete</Button>
+              </ButtonGroup>
             </Col>
             <Col xs={3} sm={2} lg={1}>
               <ButtonGroup vertical>

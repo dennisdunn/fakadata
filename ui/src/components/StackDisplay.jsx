@@ -15,7 +15,7 @@ export class StackDisplay extends React.Component {
         return (
             <Alert variant="info">
                 <div style={styles}>
-                    {this.props.stack.reverse().map(item => <div>{item}</div>)}
+                    {this.props.stack.map(item => <div>{item}</div>)}
                 </div>
             </Alert>
         );

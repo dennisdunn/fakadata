@@ -8,19 +8,6 @@ namespace Sequences
 {
     public static class SequenceCommands
     {
-        public static void Load(IStackList<object> stack)
-        {
-            var key = stack.PopAs<string>();
-            var seq = SequenceFactory.Load(key);
-            stack.Push(seq);
-        }
-
-        public static void List(IStackList<object> stack)
-        {
-            var list = SequenceFactory.List();
-            stack.PushRange(string.Join(',', list.ToArray()));
-        }
-
         public static void Merge(IStackList<object> stack)
         {
             var seq1 = stack.Pop() as IEnumerable<double>;
@@ -39,20 +26,27 @@ namespace Sequences
 
         public static void Map(IStackList<object> stack)
         {
-            var expr = stack.PopAs<string>();
-            var seq = stack.Pop() as IEnumerable<double>;
-
-            var ctx = new ExpressionContext();
-            ctx.Imports.AddType(typeof(Math));
-            ctx.Variables["x"] = 0.0;
-            var gexpr = ctx.CompileGeneric<double>(expr);
-
-            var result = seq.Select(x =>
+            try
             {
-                ctx.Variables["x"] = x;
-                return gexpr.Evaluate();
-            });
-            stack.Push(result);
+                var expr = stack.PopAs<string>();
+                var seq = stack.Pop() as IEnumerable<double>;
+
+                var ctx = new ExpressionContext();
+                ctx.Imports.AddType(typeof(Math));
+                ctx.Variables["x"] = 0.0;
+                var gexpr = ctx.CompileGeneric<double>(expr);
+
+                var result = seq.Select(x =>
+                {
+                    ctx.Variables["x"] = x;
+                    return gexpr.Evaluate();
+                });
+                stack.Push(result);
+            }
+            catch
+            {
+
+            }
         }
 
         public static void Sample(IStackList<object> stack)
@@ -68,7 +62,7 @@ namespace Sequences
             stack.Push(seq);
         }
 
-        public static void Seq(IStackList<object> stack)
+        public static void Base(IStackList<object> stack)
         {
             var x = 0;
             var seq = SequenceFactory.From(() => x++);

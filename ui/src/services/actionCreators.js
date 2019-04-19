@@ -26,7 +26,7 @@ export const getNamedSequences = () => {
 };
 
 export const getSequencerCommands = () => {
-  const uri = `${API_HOST}/${SEQUENCE_URL}/operations`;
+  const uri = `${API_HOST}/${SEQUENCE_URL}/commands`;
   return createThunk(uri, null, actions.SEQUENCER_COMMANDS_LOADED);
 };
 

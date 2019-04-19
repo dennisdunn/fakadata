@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Timeseries.Api.Repository;
+using Timeseries.Api.Services;
 
 namespace Timeseries.Api.Controllers
 {
@@ -13,15 +14,14 @@ namespace Timeseries.Api.Controllers
     [ApiController]
     public class SequencerController : ControllerBase
     {
+        private readonly IMemoryCache _memoryCache;
         private readonly IRepository<object> _repository;
 
-        Lazy<StackMachine> SequencerEngine { get; set; }
+        private Lazy<IStackMachine> _sequencer;
 
-        public SequencerController(IRepository<object> repository, IMemoryCache memoryCache)
+        public SequencerController( IMemoryCache memoryCache)
         {
-            SequencerEngine = new Lazy<StackMachine>(() => (StackMachine)memoryCache.GetOrCreate(Magic.SEQUENCE_BUILDER_KEY, entry => entry.Value = new StackMachine(typeof(SequenceCommands))));
-
-            _repository = repository;
+            _sequencer = new Lazy<IStackMachine>(() => (IStackMachine)memoryCache.GetOrCreate(Magic.SEQUENCE_BUILDER_KEY, entry => entry.Value = new StackMachine(typeof(SequenceCommands), typeof(RepositoryCommands))));
         }
 
         /// <summary>
@@ -36,13 +36,13 @@ namespace Timeseries.Api.Controllers
         }
 
         /// <summary>
-        /// Get a list of operations known to the sequencer engine.
+        /// Get a list of commands known to the sequencer engine.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("Operations")]
-        public IActionResult GetOperations()
+        [HttpGet("commands")]
+        public IActionResult GetCommands()
         {
-            var items = SequencerEngine.Value.Commands;
+            var items = _sequencer.Value.Commands;
             return new JsonResult(items);
         }
 
@@ -53,7 +53,7 @@ namespace Timeseries.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var seq = SequencerEngine.Value.Context.Peek() as IEnumerable<double>;
+            var seq = _sequencer.Value.Context.Peek() as IEnumerable<double>;
 
             return seq != null
                 ? (IActionResult)new JsonResult(seq.Take(Magic.DEFAULT_PREVIEW_COUNT))
@@ -61,41 +61,17 @@ namespace Timeseries.Api.Controllers
         }
 
         /// <summary>
-        /// Evaluate the sequencer engine operations.
+        /// Evaluate the sequencer engine commands.
         /// </summary>
-        /// <param name="operations"></param>
+        /// <param name="commands"></param>
         /// <returns></returns>
         // POST: api/Sequence
         [HttpPost("Eval")]
-        public IActionResult PostEval([FromBody]string[] operations)
+        public IActionResult Post([FromBody]string[] commands)
         {
-            SequencerEngine.Value.Eval(operations);
+            _sequencer.Value.Eval(commands);
 
-            return new JsonResult(SequencerEngine.Value.Context.ToDisplay());
-        }
-
-        /// <summary>
-        /// Save the list of sequencer engine operations with the given name.
-        /// </summary>
-        /// <param name="operations"></param>
-        /// <returns></returns>
-        // POST: api/Sequence/key
-        [HttpPost("{key}")]
-        public IActionResult Post(string key, [FromBody]string[] operations)
-        {
-            return Ok();
-        }
-
-        /// <summary>
-        /// Delete the named sequencer.
-        /// </summary>
-        /// <param name="operations"></param>
-        /// <returns></returns>
-        // DELETE: api/Sequence/key
-        [HttpDelete("{key}")]
-        public IActionResult Delete(string key)
-        {
-            return Ok();
+            return new JsonResult(_sequencer.Value.Context.ToDisplay());
         }
     }
 }

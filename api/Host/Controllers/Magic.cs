@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Timeseries.Api.Controllers
 {
-    public class Constants
+    public class Magic
     {
+        public const string SEQUENCE_BUILDER_KEY = "seqBuilder";
         public const int DEFAULT_PREVIEW_COUNT = 500;
     }
 }

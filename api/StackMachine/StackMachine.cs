@@ -6,52 +6,70 @@ using System.Reflection;
 
 namespace SimpleStackMachine
 {
-    public class StackMachine
+    public class StackMachine : IStackMachine
     {
         internal StackList<object> _stack = new StackList<object>();
         internal Dictionary<string, MethodInfo> _commands = new Dictionary<string, MethodInfo>(StringComparer.OrdinalIgnoreCase);
 
         public StackList<object> Context => _stack;
 
+        public IEnumerable<string> Commands => _commands.Keys;
+
         public StackMachine()
         {
-            Assembly[] assemblies = {
-                Assembly.GetExecutingAssembly(),
-                Assembly.GetCallingAssembly(),
-                Assembly.GetEntryAssembly()
-            };
-
-            Register(assemblies);
+            Register(Assembly.GetExecutingAssembly());
         }
 
-        public void Register(params Assembly[] assemblies)
+        public StackMachine(params Type[] types) : this()
         {
-            foreach (var assembly in assemblies)
-                foreach (var t in assembly.GetTypes().Where(t => t.IsClass && t.IsAbstract && t.IsSealed))
-                    foreach (var m in t.GetMethods(BindingFlags.Public | BindingFlags.Static))
-                    {
-                        if (m.ReturnType == typeof(void)
-                            && m.GetParameters().Count() == 1
-                            && m.GetParameters().Any(x => x.ParameterType == typeof(IStackList<object>)))
-                        {
-                            _commands[m.Name] = m;
-                        }
-                    }
-        }
-
-        public void Eval(params string[] text)
-        {
-            foreach (var src in text)
+            foreach (var type in types)
             {
-                if (_commands.ContainsKey(src))
+                Register(type);
+            }
+        }
+
+        public void Register<T>()
+        {
+            Register(typeof(T).Assembly);
+        }
+
+        public void Register(Type t)
+        {
+            Register(t.Assembly);
+        }
+
+        public void Register(Assembly assembly)
+        {
+            foreach (var t in assembly.GetTypes().Where(t => t.IsClass && t.IsAbstract && t.IsSealed))
+                foreach (var m in t.GetMethods(BindingFlags.Public | BindingFlags.Static))
                 {
-                    var info = _commands[src];
-                    info.Invoke(info, new[] { _stack });
+                    if (m.ReturnType == typeof(void)
+                        && m.GetParameters().Count() == 1
+                        && m.GetParameters().Any(x => x.ParameterType == typeof(IStackList<object>)))
+                    {
+                        _commands[m.Name] = m;
+                    }
                 }
-                else
-                {
-                    _stack.Push(src);
-                }
+        }
+
+        public void Eval(string text)
+        {
+            if (_commands.ContainsKey(text))
+            {
+                var info = _commands[text];
+                info.Invoke(info, new[] { _stack });
+            }
+            else
+            {
+                _stack.Push(text);
+            }
+        }
+
+        public void Eval(string[] text)
+        {
+            foreach (var t in text)
+            {
+                Eval(t);
             }
         }
 

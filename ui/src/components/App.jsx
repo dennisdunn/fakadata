@@ -27,7 +27,7 @@ class App extends Component {
     this.props.evalSequencerCommands([name, "load"]);
   }
 
-  eval(evt){
+  eval(evt) {
     this.props.evalSequencerCommands([evt]);
   }
 
@@ -37,22 +37,32 @@ class App extends Component {
         <Navbar bg="primary" variant="dark">
           <Navbar.Brand>Fakadata</Navbar.Brand>
           <Navbar.Collapse className="justify-content-end">
-            <SequencePicker items={this.props.names} onSelect={this.select.bind(this)} />
           </Navbar.Collapse>
         </Navbar>
         <Container style={styles.container} fluid>
           <Row>
-            <Col xs={2}>
-            <ButtonGroup vertical>
-            <Button onClick={this.eval.bind(this,'seq')}>Seq</Button>
-            <Button onClick={this.eval.bind(this,'para')}>Para</Button>
-            <Button onClick={this.eval.bind(this,'noise')}>Noise</Button>
-            </ButtonGroup>
-              <StackDisplay stack={this.props.stack} />
-              <Button variant='discrete' onClick={this.props.getSequencePreview}>Preview</Button>
+            <Col xs={2} md={1}>
+              <ButtonGroup vertical>
+                <SequencePicker items={this.props.names} onSelect={this.select.bind(this)} />
+                <Button variant="success" onClick={this.eval.bind(this, 'seq')}>Base</Button>
+                <Button variant="success" onClick={this.eval.bind(this, 'para')}>Para</Button>
+                <Button variant="success" onClick={this.eval.bind(this, 'noise')}>Noise</Button>
+                <Button variant='secondary' onClick={this.props.getSequencePreview}>Preview</Button>
+              </ButtonGroup>
             </Col>
-            <Col xs={2} />
-            <Col xs={8}>
+            <Col xs={4} md={2}>
+              <StackDisplay stack={this.props.stack} />
+            </Col>
+            <Col xs={2} md={1}>
+              <ButtonGroup vertical>
+                <Button variant="secondary" onClick={this.eval.bind(this, 'swap')}>Swap</Button>
+                <Button variant="secondary" onClick={this.eval.bind(this, 'drop')}>Drop</Button>
+                <Button variant="secondary" onClick={this.eval.bind(this, 'pick')}>Pick</Button>
+                <Button variant="secondary" onClick={this.eval.bind(this, 'roll')}>Roll</Button>
+                <Button variant="secondary" onClick={this.eval.bind(this, 'clear')}>Clear</Button>
+              </ButtonGroup>
+            </Col>
+            <Col>
               <ExpressionGraph data={this.props.data} />
             </Col>
           </Row>

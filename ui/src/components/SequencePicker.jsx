@@ -6,10 +6,10 @@ export class SequencePicker extends React.Component {
     render() {
         const items = this.props.items
             .sort()
-            .map(item => <Dropdown.Item key={item} eventKey={item}>{item}</Dropdown.Item>);
+            .map((item, idx) => <Dropdown.Item key={idx} eventKey={item}>{item}</Dropdown.Item>);
             
         return (
-            <Dropdown onSelect={this.props.onSelect} size='sm' drop='left'>
+            <Dropdown onSelect={this.props.onSelect} size='sm'>
                 <Dropdown.Toggle variant="success">Sequence</Dropdown.Toggle>
                 <Dropdown.Menu>
                     {items}

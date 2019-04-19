@@ -1,17 +1,23 @@
 import React from 'react';
+import Alert from 'react-bootstrap/Alert';
 
 const styles = {
-    flexDirection: 'column',
-    justifyContent: 'flex-end'
+    display: 'flex',
+    flexDirection: 'column-reverse',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    height: '10em'
 };
 
 export class StackDisplay extends React.Component {
 
     render() {
         return (
-            <div style={styles}>
-                {this.props.stack.reverse().map(item => <div>{item}</div>)}
-            </div>
+            <Alert variant="info">
+                <div style={styles}>
+                    {this.props.stack.reverse().map(item => <div>{item}</div>)}
+                </div>
+            </Alert>
         );
     }
 }

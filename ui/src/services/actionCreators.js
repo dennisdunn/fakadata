@@ -1,10 +1,10 @@
 import * as actions from "./actionTypes";
 
-const API_HOST = `http://${window.location.hostname}:8081`;
+const API_HOST = `http://${window.location.hostname}:8080`;
 const SEQUENCE_URL = "api/sequencer";
 
 export const evalSequencerCommands = commands => {
-  const uri = `${API_HOST}/${SEQUENCE_URL}`;
+  const uri = `${API_HOST}/${SEQUENCE_URL}/eval`;
   const options = {
     headers: {
       'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ export const getNamedSequences = () => {
 };
 
 export const getSequencerCommands = () => {
-  const uri = `${API_HOST}/${SEQUENCE_URL}/commands`;
+  const uri = `${API_HOST}/${SEQUENCE_URL}/operations`;
   return createThunk(uri, null, actions.SEQUENCER_COMMANDS_LOADED);
 };
 

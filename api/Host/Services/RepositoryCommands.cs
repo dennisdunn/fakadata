@@ -10,10 +10,13 @@ namespace Timeseries.Api.Services
     {
         public static void Load(IStackList<object> stack)
         {
-            var key = stack.PopAs<string>();
-            var seq = Sequences.SequenceFactory.Load(key);
+            if (stack.HasA<string>())
+            {
+                var key = stack.Pop<string>();
+                var seq = Sequences.SequenceFactory.Load(key);
 
-            stack.Push(seq);
+                stack.Push(seq);
+            }
         }
 
         public static void Save(IStackList<object> stack)

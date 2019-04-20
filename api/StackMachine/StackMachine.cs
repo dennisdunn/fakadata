@@ -61,7 +61,26 @@ namespace SimpleStackMachine
             }
             else
             {
-                _stack.Push(text);
+                if (int.TryParse(text, out int i))
+                {
+                    _stack.Push(i);
+                }
+                else if (double.TryParse(text, out double d))
+                {
+                    _stack.Push(d);
+                }
+                else if (DateTime.TryParse(text, out DateTime dt))
+                {
+                    _stack.Push(dt);
+                }
+                else if (bool.TryParse(text, out bool b))
+                {
+                    _stack.Push(b);
+                }
+                else
+                {
+                    _stack.Push(text);
+                }
             }
         }
 

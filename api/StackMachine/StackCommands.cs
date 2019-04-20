@@ -13,29 +13,46 @@
 
         public static void Drop(IStackList<object> stack)
         {
-            stack.Pop();
+            if (stack.Count > 0)
+            {
+                stack.Pop();
+            }
         }
 
         public static void Pick(IStackList<object> stack)
         {
-            var i = stack.PopAs<int>();
-            if (i > stack.Count)
+            if (stack.HasA<int>())
             {
-                var obj = stack[i];
-                stack.Remove(obj);
-                stack.Push(obj);
+                var i = stack.Pop<int>();
+                if (i > stack.Count)
+                {
+                    var obj = stack[i];
+                    stack.Remove(obj);
+                    stack.Push(obj);
+                }
+                else
+                {
+                    stack.Push(i);
+                }
             }
         }
 
         public static void Roll(IStackList<object> stack)
         {
-            var i = stack.PopAs<int>();
-            if (i <= stack.Count)
+            if (stack.HasA<int>())
             {
-                for (var j = 0; j < i; j++)
+                var i = stack.Pop<int>();
+                if (i <= stack.Count)
                 {
-                    var obj = stack.Pop();
-                    stack.Add(obj);
+                    for (var j = 0; j < i; j++)
+                    {
+                        var obj = stack.Pop();
+                        stack.Add(obj);
+                    }
+                }
+                else
+                {
+                    stack.Push(i);
                 }
             }
         }

@@ -6,19 +6,13 @@ namespace SimpleStackMachine
 {
     public static class Extensions
     {
-        public static T PopAs<T>(this IStackList<object> stack)
+        public static T Pop<T>(this IStackList<object> stack)
         {
-            var obj = stack.Pop();
-            T result;
-            try
-            {
-                result = (T)Convert.ChangeType(obj, typeof(T));
-            }
-            catch
-            {
-                result = default;
-            }
-            return result;
+            var item = stack.Pop();
+            if (typeof(T).IsAssignableFrom(item.GetType()))
+                return (T)item;
+            else
+                return (T)Convert.ChangeType(item, typeof(T));
         }
 
         public static void PushRange<T>(this IStackList<object> stack, IEnumerable<T> collection)
@@ -31,8 +25,24 @@ namespace SimpleStackMachine
 
         public static string[] ToDisplay(this IStackList<object> stack)
         {
-            var text = stack.Select(item=>item.ToString());
+            var text = stack.Select(item => item.ToString());
             return text.ToArray();
+        }
+
+        public static bool HasA<T>(this IStackList<object> stack, int idx)
+        {
+
+            return typeof(T).IsAssignableFrom(stack[idx].GetType());
+        }
+
+        public static bool HasA<T1>(this IStackList<object> stack)
+        {
+            return stack.HasA<T1>(0);
+        }
+
+        public static bool HasA<T1, T2>(this IStackList<object> stack)
+        {
+            return stack.HasA<T1>(0) && stack.HasA<T2>(1);
         }
     }
 }

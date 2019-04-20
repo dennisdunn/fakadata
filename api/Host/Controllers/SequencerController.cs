@@ -56,7 +56,7 @@ namespace Timeseries.Api.Controllers
             var seq = _sequencer.Value.Context.Peek() as IEnumerable<double>;
 
             return seq != null
-                ? (IActionResult)new JsonResult(seq.Take(Magic.DEFAULT_PREVIEW_COUNT))
+                ? new JsonResult(seq.Take(Magic.DEFAULT_PREVIEW_COUNT))
                 : (IActionResult)NoContent();
         }
 

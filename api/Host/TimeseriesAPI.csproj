@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EmbeddedSequences\EmbeddedSequences.csproj" />
     <ProjectReference Include="..\Sequences\Sequences.csproj" />
     <ProjectReference Include="..\StackMachine\SimpleStackMachine.csproj" />
   </ItemGroup>

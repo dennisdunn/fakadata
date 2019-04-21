@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeseriesAPI", "Host\TimeseriesAPI.csproj", "{00214E67-304E-438A-B6AC-58FF7ED66FDB}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleStackMachine", "StackMachine\SimpleStackMachine.csproj", "{E02CC62E-EDB3-4DB3-8914-3CC5739F6ADB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sequences", "Sequences\Sequences.csproj", "{2021B6F5-7CA1-456E-9D00-9C8846A361C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sequences", "Sequences\Sequences.csproj", "{2021B6F5-7CA1-456E-9D00-9C8846A361C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmbeddedSequences", "EmbeddedSequences\EmbeddedSequences.csproj", "{3B5B18C1-2A18-42DF-9071-78B4A97671C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2021B6F5-7CA1-456E-9D00-9C8846A361C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2021B6F5-7CA1-456E-9D00-9C8846A361C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2021B6F5-7CA1-456E-9D00-9C8846A361C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B5B18C1-2A18-42DF-9071-78B4A97671C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B5B18C1-2A18-42DF-9071-78B4A97671C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B5B18C1-2A18-42DF-9071-78B4A97671C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B5B18C1-2A18-42DF-9071-78B4A97671C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

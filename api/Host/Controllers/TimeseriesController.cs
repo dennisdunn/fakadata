@@ -14,15 +14,15 @@ namespace Timeseries.Api.Controllers
     [ApiController]
     public class TimeseriesController : ControllerBase
     {
-        private readonly IRepository<object> _repository;
+        private readonly IRepository<Doc> _repository;
+        private readonly IStackMachine _stackMachine;
         private readonly IMemoryCache _memoryCache;
 
-        private IStackMachine SequencerEngine => (IStackMachine)_memoryCache.GetOrCreate(Magic.SEQUENCE_BUILDER_KEY, entry => entry.Value = new StackMachine(typeof(SequenceCommands)));
-
-        public TimeseriesController(IRepository<object> repository, IMemoryCache memoryCache)
+        public TimeseriesController(IRepository<Doc> repository, IMemoryCache memoryCache, IStackMachine stackMachine)
         {
             _repository = repository;
             _memoryCache = memoryCache;
+            _stackMachine = stackMachine;
         }
 
         // GET: api/Timeseries
@@ -49,21 +49,9 @@ namespace Timeseries.Api.Controllers
         [HttpGet("{key}")]
         public IActionResult Get(string key, int? count)
         {
-            var series = (IEnumerable<object>)_memoryCache.Get(key);
+            var series = _memoryCache.GetOrCreate(key, entry => MakeSequence(key));
 
             return new JsonResult(series.Take(count ?? 1));
-        }
-
-        // POST: api/Timeseries/key
-        /// <summary>
-        /// Load the sequence named 'key' into the cache.
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        [HttpPost("{key}")]
-        public IActionResult Post(string key)
-        {
-            throw new NotImplementedException();
         }
 
         // DELETE: api/Timeseries/key
@@ -78,6 +66,23 @@ namespace Timeseries.Api.Controllers
             _memoryCache.Remove(key);
 
             return Ok();
+        }
+
+        private IEnumerable<double> MakeSequence(string key)
+        {
+            if (SequenceFactory.List().Contains(key))
+            {
+                return SequenceFactory.Load(key);
+            }
+            else
+            {
+                var doc = _repository.Read(key);
+                if (doc != null)
+                {
+                    _stackMachine.Eval((string[])doc.Value);
+                }
+            }
+            throw new ArgumentException("key");
         }
     }
 }

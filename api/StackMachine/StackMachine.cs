@@ -84,7 +84,7 @@ namespace SimpleStackMachine
             }
         }
 
-        public void Eval(string[] text)
+        public void Eval(IEnumerable<string> text)
         {
             foreach (var t in text)
             {
@@ -99,6 +99,11 @@ namespace SimpleStackMachine
             {
                 Eval(text);
             }
+        }
+
+        public void Reset()
+        {
+            _stack.Clear();
         }
     }
 }

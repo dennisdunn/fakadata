@@ -14,14 +14,15 @@ namespace Timeseries.Api.Controllers
     [ApiController]
     public class SequencerController : ControllerBase
     {
+        private readonly IRecordingStackMachine _stackmachine;
+        private readonly IRepository<IDocument> _repository;
         private readonly IMemoryCache _memoryCache;
-        private readonly IRepository<object> _repository;
 
-        private Lazy<IStackMachine> _sequencer;
-
-        public SequencerController( IMemoryCache memoryCache)
+        public SequencerController(IRepository<IDocument> repository, IMemoryCache memoryCache, IRecordingStackMachine stackmachine)
         {
-            _sequencer = new Lazy<IStackMachine>(() => (IStackMachine)memoryCache.GetOrCreate(Magic.SEQUENCE_BUILDER_KEY, entry => entry.Value = new StackMachine(typeof(SequenceCommands), typeof(RepositoryCommands))));
+            _repository = repository;
+            _stackmachine = stackmachine;
+            _memoryCache= memoryCache;
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace Timeseries.Api.Controllers
         [HttpGet("Names")]
         public IActionResult GetNames()
         {
-            var items = SequenceFactory.List();
+            var items = SequenceFactory.List().Concat(_repository.List().Select(a=>a.Key));
             return new JsonResult(items);
         }
 
@@ -39,10 +40,10 @@ namespace Timeseries.Api.Controllers
         /// Get a list of commands known to the sequencer engine.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("commands")]
+        [HttpGet("Commands")]
         public IActionResult GetCommands()
         {
-            var items = _sequencer.Value.Commands;
+            var items = _stackmachine.Commands;
             return new JsonResult(items);
         }
 
@@ -50,13 +51,11 @@ namespace Timeseries.Api.Controllers
         /// Get an array of values from the sequencer engine.
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet("Preview")]
         public IActionResult Get()
         {
-            var seq = _sequencer.Value.Context.Peek() as IEnumerable<double>;
-
-            return seq != null
-                ? new JsonResult(seq.Take(Magic.DEFAULT_PREVIEW_COUNT))
+            return _stackmachine.Context.HasA<IEnumerable<double>>()
+                ? new JsonResult(((IEnumerable<double>)_stackmachine.Context.Peek()).Take(Magic.DEFAULT_PREVIEW_COUNT))
                 : (IActionResult)NoContent();
         }
 
@@ -69,9 +68,62 @@ namespace Timeseries.Api.Controllers
         [HttpPost("Eval")]
         public IActionResult Post([FromBody]string[] commands)
         {
-            _sequencer.Value.Eval(commands);
+            foreach (var command in commands.Select(a => a.ToLower()))
+            {
+                switch (command)
+                {
+                    case "reset":
+                        _stackmachine.History.Add(command);
+                        _stackmachine.Reset();
+                        break;
+                    case "save":
+                        _stackmachine.History.Add(command);
+                        if (_stackmachine.Context.HasA<string>())
+                        {
+                            var key = _stackmachine.Context.Pop<string>();
+                            var doc = new Doc { Key = key, Value = _stackmachine.History };
+                            _repository.Create(doc);
+                        }
+                        break;
+                    case "load":
+                        _stackmachine.History.Add(command);
+                        if (_stackmachine.Context.HasA<string>())
+                        {
+                            var key = _stackmachine.Context.Pop<string>();
+                            var doc = _repository.Read(key);
+                            if (doc != null)
+                            {
+                                var text = ((object[])doc.Value).Cast<string>();
 
-            return new JsonResult(_sequencer.Value.Context.ToDisplay());
+                                _stackmachine.Reset();
+                                _stackmachine.Eval(text);
+                            }
+                            else if (SequenceFactory.List().Contains(key))
+                            {
+                                var seq = SequenceFactory.Load(key);
+                                _stackmachine.Context.Push(seq);
+                            }
+                        }
+                        break;
+                    case "delete":
+                        _stackmachine.History.Add(command);
+                        if (_stackmachine.Context.HasA<string>())
+                        {
+                            var key = _stackmachine.Context.Pop<string>();
+                            var doc = _repository.Read(key);
+                            if (doc != null)
+                            {
+                                _repository.Delete(doc._id);
+                            }
+                        }
+                        break;
+                    default:
+                        _stackmachine.Eval(command);
+                        break;
+                }
+            }
+
+            return new JsonResult(_stackmachine.Context.ToDisplay());
         }
     }
 }

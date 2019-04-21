@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SimpleStackMachine;
 using Swashbuckle.AspNetCore.Swagger;
 using Timeseries.Api.Models;
 using Timeseries.Api.Repository;
+using Timeseries.Api.Services;
 
 namespace Host
 {
@@ -33,7 +35,9 @@ namespace Host
                 c.SwaggerDoc("v1", new Info { Title = "Fakadata API", Version = "v1" });
             });
 
-            services.AddSingleton<IRepository<object>>(new Repository<object>(Configuration["connectionStrings:TsDescDb"]));
+            services.AddTransient<IStackMachine, StackMachine>();
+            services.AddSingleton<IRepository<IDocument>>(new Repository<IDocument>(Configuration["connectionStrings:TsDescDb"]));
+            services.AddSingleton<IRecordingStackMachine, RecordingStackMachine>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,7 +8,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleStackMachine;
 using Swashbuckle.AspNetCore.Swagger;
-using Timeseries.Api.Models;
 using Timeseries.Api.Repository;
 using Timeseries.Api.Services;
 

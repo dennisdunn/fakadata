@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Timeseries.Api.Models.Collections
+namespace Sequences
 {
-    public class ForeverEnumerator<T> : IEnumerator<T>
+    public class RepeatingEnumerator<T> : IEnumerator<T>
     {
         private readonly IEnumerator<T> _target;
 
@@ -12,7 +12,7 @@ namespace Timeseries.Api.Models.Collections
 
         object IEnumerator.Current => Current;
 
-        public ForeverEnumerator(IEnumerator<T> target)
+        public RepeatingEnumerator(IEnumerator<T> target)
         {
             _target = target;
         }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Timeseries.Api.Models.Collections
+namespace Sequences
 {
-    public interface IPerpetual<T>
+    public interface IPerpetual<T> : IEnumerable<T>
     {
     }
 }

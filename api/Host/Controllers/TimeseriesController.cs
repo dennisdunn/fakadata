@@ -7,6 +7,7 @@ using System.Linq;
 using Timeseries.Api.Repository;
 using System;
 using Timeseries.Api.Services;
+using EmbeddedSequences;
 
 namespace Timeseries.Api.Controllers
 {

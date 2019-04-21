@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sequences
 {
@@ -9,7 +10,7 @@ namespace Sequences
 
         public PerpetualEnumerable(IEnumerable<T> target)
         {
-            _enumerator = new RepeatingEnumerator<T>(target.GetEnumerator());
+            _enumerator = new RepeatingEnumerator<T>(target.ToList().GetEnumerator());
         }
 
         public IEnumerator<T> GetEnumerator()

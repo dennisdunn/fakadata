@@ -1,4 +1,5 @@
-﻿using Flee.PublicTypes;
+﻿using EmbeddedSequences;
+using Flee.PublicTypes;
 using SimpleStackMachine;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,16 @@ namespace Sequences
             }
         }
 
+        public static void Cycle(IStackList<object> stack)
+        {
+            if (stack.HasA<IEnumerable<double>>())
+            {
+                var seq = stack.Pop<IEnumerable<double>>();
+                seq = seq.AsCycle();
+                stack.Push(seq);
+            }
+        }
+
         public static void Map(IStackList<object> stack)
         {
             if (stack.HasA<string, IEnumerable<double>>())
@@ -39,6 +50,7 @@ namespace Sequences
 
                 var ctx = new ExpressionContext();
                 ctx.Imports.AddType(typeof(Math));
+                ctx.Imports.AddType(typeof(Probability));
                 ctx.Variables["x"] = 0.0;
                 var gexpr = ctx.CompileGeneric<double>(expr);
 

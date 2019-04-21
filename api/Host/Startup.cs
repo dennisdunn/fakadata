@@ -34,7 +34,7 @@ namespace Host
                 c.SwaggerDoc("v1", new Info { Title = "Fakadata API", Version = "v1" });
             });
 
-            services.AddTransient<IStackMachine, StackMachine>();
+            services.AddTransient<IStackMachine>(provider => new StackMachine(typeof(Sequences.SequenceCommands), typeof(EmbeddedSequences.SequenceFactoryCommands)));
             services.AddSingleton<IRepository<IDocument>>(new Repository<IDocument>(Configuration["connectionStrings:TsDescDb"]));
             services.AddSingleton<IRecordingStackMachine, RecordingStackMachine>();
         }

@@ -62,7 +62,9 @@ class App extends Component {
                 <Button variant="success" onClick={this.eval.bind(this, 'base')}>Base</Button>
                 <Button variant="success" onClick={this.eval.bind(this, 'para')}>Para</Button>
                 <Button variant="success" onClick={this.eval.bind(this, 'noise')}>Noise</Button>
-                <Button variant='secondary' onClick={this.props.getSequencePreview}>Preview</Button>
+              </ButtonGroup>
+              <ButtonGroup vertical>
+                <Button variant='discrete' onClick={this.props.getSequencePreview}>Preview</Button>
               </ButtonGroup>
             </Col>
             <Col xs={6} sm={4} lg={2}>
@@ -77,11 +79,6 @@ class App extends Component {
               <ButtonGroup style={styles.wide}>
                 <Button variant="success" onClick={this.eval.bind(this, 'map')}>Map</Button>
                 <Button variant="success" onClick={this.eval.bind(this, 'sample')}>Sample</Button>
-              </ButtonGroup>
-              <ButtonGroup style={styles.wide}>
-                <Button variant="light" onClick={this.eval.bind(this, 'load')}>Load</Button>
-                <Button variant="light" onClick={this.eval.bind(this, 'save')}>Save</Button>
-                <Button variant="light" onClick={this.eval.bind(this, 'delete')}>Delete</Button>
               </ButtonGroup>
             </Col>
             <Col xs={3} sm={2} lg={1}>

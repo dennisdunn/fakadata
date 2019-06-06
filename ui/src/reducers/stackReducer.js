@@ -1,23 +1,25 @@
 import * as actions from '../actions/stackActions';
+import * as stackService from '../services/stackService';
 
 const stackReducer = (state = [], action) => {
-    var stack = [...state];
+    let stack = [...state];
     switch (action.type) {
         case actions.STACK_PUSH:
-            stack.unshift(action.payload);
-            return stack;
+            return stackService.push(stack, action.payload);
         case actions.STACK_DROP:
-            stack.shift();
-            return stack;
+            return stackService.drop(stack);
         case actions.STACK_SWAP:
-            stack.unshift(stack[1]);
-            return stack;
+            return stackService.swap(stack);
         case actions.STACK_PICK:
-            stack.unshift(stack[action.payload - 1]);
+            if (Number(stack[0] != NaN)) {
+                const idx = stackService.pop(stack);
+                stack = stackService.pick(stack, idx);
+            }
             return stack;
         case actions.STACK_ROLL:
-            for (let i = 0; i < stack.length; i++) {
-                stack.push(stack[0]);
+            if (Number(stack[0] != NaN)) {
+                const idx = stackService.pop(stack);
+                stack = stackService.roll(stack, idx);
             }
             return stack;
         case actions.STACK_CLEAR:

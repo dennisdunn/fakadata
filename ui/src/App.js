@@ -1,55 +1,37 @@
+import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Drawer from '@material-ui/core/Drawer';
+import TextField from '@material-ui/core/TextField';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import FormControl from 'react-bootstrap/FormControl';
-import InputGroup from 'react-bootstrap/InputGroup';
-import Navbar from 'react-bootstrap/Navbar';
-import Row from 'react-bootstrap/Row';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import { connect } from 'react-redux';
-import * as Actions from './actions/stackActionCreators';
-import './app.css';
-import StackDisplay from './components/StackDisplay';
+import { push } from './actions/stackActionCreators';
+import { StackControls, StackDisplay } from './components';
 
-export const App = ({ stack, ...props }) => {
-
+export const App = props => {
   const [input, setInput] = React.useState('');
-
   return (
     <div>
-      <Navbar variant='dark' bg='primary'>
-        <Navbar.Brand>Fakadata</Navbar.Brand>
-      </Navbar>
-      <Container>
-        <Row>
-          <Col>
-            <InputGroup size="sm">
-              <FormControl value={input} onChange={e => setInput(e.target.value)} />
-              <InputGroup.Append>
-                <Button variant='outline-secondary' onClick={() => { props.push(input); setInput(''); }}>Enter</Button>
-              </InputGroup.Append>
-            </InputGroup>
-            <ButtonGroup>
-              <Button variant='success' onClick={props.swap}>Swap</Button>
-              <Button variant='success' onClick={props.drop}>Drop</Button>
-              <Button variant='success' onClick={props.pick}>Pick</Button>
-              <Button variant='success' onClick={props.roll}>Roll</Button>
-              <Button variant='success' onClick={props.clear}>Clear</Button>
-            </ButtonGroup>
-          </Col>
-          <Col>
-            <StackDisplay stack={stack} />
-          </Col>
-        </Row>
-      </Container>
+      <CssBaseline />
+      <AppBar position='fixed' style={{ zIndex: 2000 }}>
+        <Toolbar>
+          <Typography variant='h6'>Fakadata</Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer variant="permanent">
+        <div style={{ marginTop: '5em' }}>
+          <StackControls />
+        </div>
+      </Drawer>
+      <main style={{ marginTop: '5em', marginLeft: '10em' }}>
+        <TextField value={input} onChange={e => setInput(e.target.value)} />
+        <Button onClick={() => { props.push(input); setInput('') }}>Enter</Button>
+        <StackDisplay stack={props.stack} style={{ marginTop: '2em' }} />
+      </main>
     </div>
   );
 };
 
-const mapStateToProps = state => {
-  return { stack: state.stack };
-}
-
-export default connect(mapStateToProps, Actions)(App);
+export default connect(({ stack }) => ({ stack }), { push })(App);

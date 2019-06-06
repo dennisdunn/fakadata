@@ -3,6 +3,7 @@ import * as stackService from '../services/stackService';
 
 const stackReducer = (state = [], action) => {
     let stack = [...state];
+    
     switch (action.type) {
         case actions.STACK_PUSH:
             return stackService.push(stack, action.payload);
@@ -11,14 +12,16 @@ const stackReducer = (state = [], action) => {
         case actions.STACK_SWAP:
             return stackService.swap(stack);
         case actions.STACK_PICK:
-            if (Number(stack[0] != NaN)) {
-                const idx = stackService.pop(stack);
+            if (!isNaN(Number(stack[0]))) {
+                const idx = Number(stack[0]);
+                stack.shift();
                 stack = stackService.pick(stack, idx);
             }
             return stack;
         case actions.STACK_ROLL:
-            if (Number(stack[0] != NaN)) {
-                const idx = stackService.pop(stack);
+            if (!isNaN(Number(stack[0]))) {
+                const idx = Number(stack[0]);
+                stack.shift();
                 stack = stackService.roll(stack, idx);
             }
             return stack;

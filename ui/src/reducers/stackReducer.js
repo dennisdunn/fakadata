@@ -3,7 +3,7 @@ import * as stackService from '../services/stackService';
 
 const stackReducer = (state = [], action) => {
     let stack = [...state];
-    
+
     switch (action.type) {
         case actions.STACK_PUSH:
             return stackService.push(stack, action.payload);

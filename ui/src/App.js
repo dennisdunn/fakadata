@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from './actions/stackActionCreators';
-import { StackControls, StackDisplay } from './components';
+import { StackControls, StackDisplay, SeriesControls } from './components';
 
 export const App = props => {
   const [input, setInput] = React.useState('');
@@ -23,9 +23,10 @@ export const App = props => {
       <Drawer variant="permanent">
         <div style={{ marginTop: '5em' }}>
           <StackControls />
+          <SeriesControls />
         </div>
       </Drawer>
-      <main style={{ marginTop: '5em', marginLeft: '10em' }}>
+      <main style={{ marginTop: '5em', marginLeft: '10em', marginRight: '5em' }}>
         <TextField value={input} onChange={e => setInput(e.target.value)} />
         <Button onClick={() => { props.push(input); setInput('') }}>Enter</Button>
         <StackDisplay stack={props.stack} style={{ marginTop: '2em' }} />

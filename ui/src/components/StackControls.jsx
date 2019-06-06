@@ -1,9 +1,9 @@
-import { ListItem } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 import React from 'react';
-import * as actions from '../actions/stackActionCreators';
 import { connect } from 'react-redux';
+import * as actions from '../actions/stackActionCreators';
 
 export const StackControls = props => {
     return (

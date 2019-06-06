@@ -1,4 +1,4 @@
-import * as series from './dataSeries';
+import * as series from './seriesService';
 
 const a = [0, 1, 2, 3, 4];
 const b = [5, 6, 7, 8, 9];

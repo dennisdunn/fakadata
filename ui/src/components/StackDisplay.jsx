@@ -1,5 +1,4 @@
 import React from 'react';
-import { isNumber } from 'util';
 import LineChart from 'react-svg-line-chart';
 
 const styles = {
@@ -10,8 +9,9 @@ const styles = {
 };
 
 const toComponent = (item, idx) => {
-    if (Array.isArray(item) && isNumber(item[0].x * item[0].y)) {
-        return <LineChart data={item}
+    if (Array.isArray(item)) {
+        const data = item.map((y, x) => ({ x, y }));
+        return <LineChart data={data}
             key={idx}
             pointsVisible={false}
             gridVisible={false}

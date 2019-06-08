@@ -3,14 +3,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions/seriesActionCreators';
+import { actions } from '../ducks/series';
 
 export const SeriesControls = props => {
     return (
         <List component='nav'>
-        <ListItem>
-            <Button onClick={props.zero} style={{ width: '100%' }}>Zero</Button>
-        </ListItem>
+            <ListItem>
+                <Button onClick={props.zero} style={{ width: '100%' }}>Zero</Button>
+            </ListItem>
             <ListItem>
                 <Button onClick={props.unit} style={{ width: '100%' }}>Unit</Button>
             </ListItem>

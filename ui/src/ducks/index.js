@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import stack from './stackReducer';
+import stack from './stack';
 
 export default combineReducers({
     stack

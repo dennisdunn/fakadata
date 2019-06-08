@@ -3,11 +3,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions/stackActionCreators';
+import { actions } from '../ducks/stack';
 
 export const StackControls = props => {
     return (
         <List component="nav">
+            <ListItem>
+                <Button variant='contained' onClick={props.dup} style={{ width: '100%' }}>Dup</Button>
+            </ListItem>
             <ListItem>
                 <Button variant='contained' onClick={props.swap} style={{ width: '100%' }}>Swap</Button>
             </ListItem>

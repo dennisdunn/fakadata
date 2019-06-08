@@ -7,7 +7,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from './actions/stackActionCreators';
+import { actions } from './ducks/stack';
 import { StackControls, StackDisplay, SeriesControls } from './components';
 
 export const App = props => {
@@ -35,4 +35,4 @@ export const App = props => {
   );
 };
 
-export default connect(({ stack }) => ({ stack }), { push })(App);
+export default connect(({ stack }) => ({ stack }), { push: actions.push })(App);

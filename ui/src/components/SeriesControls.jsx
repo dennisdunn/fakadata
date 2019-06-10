@@ -9,12 +9,6 @@ export const SeriesControls = props => {
     return (
         <List component='nav'>
             <ListItem>
-                <Button onClick={props.zero} style={{ width: '100%' }}>Zero</Button>
-            </ListItem>
-            <ListItem>
-                <Button onClick={props.unit} style={{ width: '100%' }}>Unit</Button>
-            </ListItem>
-            <ListItem>
                 <Button onClick={props.linear} style={{ width: '100%' }}>Linear</Button>
             </ListItem>
             <ListItem>

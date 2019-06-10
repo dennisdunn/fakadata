@@ -1,5 +1,6 @@
 import stack from './stack';
 import series from './series';
+import math from './math';
 
 const reduceReducers = (...reducers) => {
     return (previous, current) =>
@@ -11,5 +12,6 @@ const reduceReducers = (...reducers) => {
 
 export default reduceReducers(
     stack,
-    series
+    series,
+    math
 );

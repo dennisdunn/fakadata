@@ -28,7 +28,9 @@ const reducer = (state = [], action) => {
 
     switch (action.type) {
         case actionTypes.STACK_PUSH:
-            return stackService.push(stack, action.payload);
+            let item = action.payload;
+            if(!isNaN(Number(item))) item = Number(item);
+            return stackService.push(stack, item);
         case actionTypes.STACK_DUP:
             return stackService.dup(stack);
         case actionTypes.STACK_SWAP:

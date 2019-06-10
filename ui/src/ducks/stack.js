@@ -1,8 +1,5 @@
 import * as stackService from '../services/stackService';
 
-// Initial state
-const INITIAL_STATE = [];
-
 // Action types
 export const actionTypes = {
     STACK_DUP: 'STACK_DUP',
@@ -26,7 +23,7 @@ export const actions = {
 };
 
 // Reducder
-const reducer = (state = INITIAL_STATE, action) => {
+const reducer = (state = [], action) => {
     let stack = [...state];
 
     switch (action.type) {

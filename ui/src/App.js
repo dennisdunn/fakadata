@@ -35,4 +35,4 @@ export const App = props => {
   );
 };
 
-export default connect(({ stack }) => ({ stack }), { push: actions.push })(App);
+export default connect(state => ({ stack: state }), { push: actions.push })(App);

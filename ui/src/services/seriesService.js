@@ -39,11 +39,10 @@ export const unit = (n = 1024) => [...Array(n)].map(() => 1);
 
 export const uniform = (n = 1024) => [...Array(n)].map(() => Math.random());
 
-export const linear = (n = 1024) => [...Array(n).keys()];
+export const linear = (n = 1024) => [...Array(n).keys()].map(x => x / n);
 
-export const cycle = (n, sample_rate) => {
-    const a_cycle = [...Array(sample_rate).keys()].map(x => Math.sin(2 * Math.PI * (x / sample_rate)));
-    return [...Array(n).keys()].map(x => a_cycle[x % sample_rate]);
+export const cycle = (sample_rate, n = 1024) => {
+    const rate = +sample_rate;
+    const a_cycle = [...Array(rate).keys()].map(x => Math.sin(2 * Math.PI * (x / rate)));
+    return [...Array(n).keys()].map(x => a_cycle[x % rate]);
 }
-
-export const clone = a_arr => a_arr.map(x => x);

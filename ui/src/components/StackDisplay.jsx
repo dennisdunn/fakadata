@@ -1,5 +1,5 @@
 import React from 'react';
-import LineChart from 'react-svg-line-chart';
+import LineChart from '../components/LineChart';
 
 const styles = {
     stack: {
@@ -11,14 +11,9 @@ const styles = {
 const toComponent = (item, idx) => {
     if (Array.isArray(item)) {
         const data = item.map((y, x) => ({ x, y }));
-        return <LineChart data={data}
-            key={idx}
-            pointsVisible={false}
-            gridVisible={false}
-            axisVisible={false}
-            labelsVisible={false}
-            pathWidth={1}
-            pathColor='slateblue' />
+        const svgWidth=800;
+        const svgHeight=100;
+        return <LineChart data={data} svgWidth={svgWidth} svgHeight={svgHeight} />
     }
     return <div key={idx}>{item.toString()}</div>;
 };

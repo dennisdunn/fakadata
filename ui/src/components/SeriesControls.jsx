@@ -20,6 +20,9 @@ export const SeriesControls = props => {
             <ListItem>
                 <Button onClick={props.noise} style={{ width: '100%' }}>Noise</Button>
             </ListItem>
+            <ListItem>
+                <Button onClick={props.cycle} style={{ width: '100%' }}>Cyclic</Button>
+            </ListItem>
         </List>
     );
 }

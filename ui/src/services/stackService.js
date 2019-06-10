@@ -7,7 +7,7 @@ export const pop = stack => stack.shift();
 
 export const dup = stack => {
     if (Array.isArray(stack[0])) {
-        stack.push(stack[0].map(x => x));
+        push(stack, stack[0].map(x => x));
     } else {
         push(stack, stack[0]);
     }

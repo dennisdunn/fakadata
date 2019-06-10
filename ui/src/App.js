@@ -29,7 +29,12 @@ export const App = props => {
         </div>
       </Drawer>
       <main style={{ marginTop: '5em', marginLeft: '10em', marginRight: '5em' }}>
-        <TextField value={input} onChange={e => setInput(e.target.value)} />
+        <TextField value={input} onChange={e => setInput(e.target.value)} onKeyPress={e=>{
+          if(e.charCode === 13){
+            props.push(input);
+            setInput('');
+          }
+        }} />
         <Button onClick={() => { props.push(input); setInput('') }}>Enter</Button>
         <Button onClick={props.sum}>+</Button>
         <Button onClick={props.diff}>-</Button>

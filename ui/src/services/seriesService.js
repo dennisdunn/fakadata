@@ -44,5 +44,5 @@ export const linear = (n = 1024) => [...Array(n).keys()].map(x => x / n);
 export const cycle = (sample_rate, n = 1024) => {
     const rate = +sample_rate;
     const a_cycle = [...Array(rate).keys()].map(x => Math.sin(2 * Math.PI * (x / rate)));
-    return [...Array(n).keys()].map(x => a_cycle[x % rate]);
+    return [...Array(n).keys()].map(x => a_cycle[x % rate] + 1);
 }
